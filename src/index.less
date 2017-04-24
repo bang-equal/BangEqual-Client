@@ -1,0 +1,122 @@
+html, body {
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  margin: 0;
+      font-family: "Source Sans Pro","Helvetica Neue",sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.ba-wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.ba-header {
+  flex: 0 0 35%;
+  order: -1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header-menu {
+  flex: 0 0 30%;
+  width: 100%;
+  /* background-color: darkslategray; */
+  display: flex;
+  justify-content: space-around;
+}
+
+.header-topmargin {
+  background-color: #373a3c;
+  flex-grow: 0;
+  flex-shrink: 0;
+  max-height: 15%;
+  flex-basis: 12%;
+  width: 100%;
+  order: -1;
+  display: flex;
+  justify-content: flex-end
+}
+
+.header-jumbotron {
+  flex : 1;
+  display: flex;
+}
+
+.ba-content {
+  flex: 1 0 auto; 
+	display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content-center {
+  /* make media quiery to change flex direction if desktop to row      */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  flex-wrap: wrap;
+  max-height: 50rem;
+  order: -1;
+  background: rgba(147, 128, 108, 0.1);
+}
+
+.content-right {
+  padding: 1rem;
+  border-radius: 3px;
+  background: rgba(147, 128, 108, 0.1);
+  flex-basis: 18%;
+  display: flex;
+  align-items: center;
+}
+
+/* extra small devices (ie. portrait phones)
+   no media query since this is the default */
+
+/* small devices (ie. landscape phones) */
+@media all and (min-width: 576px) {
+  body:after {
+    content: "4";
+    display: none; } }
+
+/* medium devices (ie. tablets) */
+@media all and (min-width: 768px) {
+  body:after {
+    content: "4";
+    display: none; } }
+
+/* large devices (ie. desktops) */
+@media all and (min-width: 992px) {
+  body:after {
+    content: "8";
+    display: none; } }
+
+/* x large devices (ie. large desktops) */
+@media all and (min-width: 1200px) {
+  body:after {
+    content: "8";
+    display: none; } }
+
+/* xxl large devices (ie. tv) */
+@media all and (min-width: 1920px) {
+  body:after {
+    content: "16";
+    display: none; } }
+
+
+
+
+@import "./components/topmargin/topmargin.less";
+@import "./components/Menu/menu.less";
+@import "./components/jumbotron/jumbotron.less";
+@import "./components/articles/articles.less";
+@import "./components/adbar/adbar.less";

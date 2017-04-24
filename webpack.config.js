@@ -4,13 +4,13 @@ var webpack = require('webpack');
 module.exports = {
   entry: [
     'babel-polyfill',
-    './src/theme/main.less',
-    './src/main',
+    './src/index.less',
+    './src/index',
     'webpack-dev-server/client?http://localhost:8080'
   ],
   output: {
       publicPath: '/',
-      filename: 'main.js'
+      filename: 'index.js'
   },
   debug: true,
   devtool: 'source-map',
@@ -27,6 +27,11 @@ module.exports = {
       { 
         test: /\.less$/,
         loader: "style!css!autoprefixer!less"
+      },
+      // Images: png, gif, jpg, jpeg
+      {
+        test: /\.(png|gif|jpe?g)$/,
+        loader: 'url-loader?name= ./assets/images/[name].[ext]?limit=8192'  // inline base64 URLs for <=8k images, direct URLs for the rest
       },
     ]
   },

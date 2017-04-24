@@ -16,6 +16,7 @@
     "less-loader": "^2.2.0",
     "node-libs-browser": "^0.5.2",
     "style-loader": "^0.12.3",
+    "url-loader": "^0.5.7",
     "webpack": "^1.10.0",
     "webpack-dev-server": "^1.10.1"
   },
@@ -24,7 +25,7 @@
     "url": "https://github.com/jamesknelson/webpack-black-triangle.git"
   },
   "scripts": {
-    "start": "node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   },
   "keywords": [
     "webpack",
