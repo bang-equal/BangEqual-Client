@@ -63,9 +63,10 @@ html, body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  flex-shrink: 0;
   align-items: center;
   flex-wrap: wrap;
-  max-height: 50rem;
+  max-height: 700px;
   order: -1;
   background: rgba(147, 128, 108, 0.1);
 }
@@ -77,6 +78,12 @@ html, body {
   flex-basis: 18%;
   display: flex;
   align-items: center;
+}
+
+.close-button {
+    content: url('./sharedelements/images/close.png');
+    height: 24px;
+    width: 24px;
 }
 
 /* extra small devices (ie. portrait phones)
@@ -118,5 +125,6 @@ html, body {
 @import "./components/topmargin/topmargin.less";
 @import "./components/Menu/menu.less";
 @import "./components/jumbotron/jumbotron.less";
-@import "./components/articles/articles.less";
+@import "./components/multicomponent/multicomponent.less";
 @import "./components/adbar/adbar.less";
+@import "./components/singleview/singleview.less";
