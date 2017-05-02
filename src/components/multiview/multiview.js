@@ -1,4 +1,4 @@
-export default class MultiComponent {
+export default class MultiView {
 
   constructor(title, content, id, onclick) {
     this.title = title;
@@ -19,23 +19,21 @@ export default class MultiComponent {
     return `
             <div class="article-stats-bar">
                 <div>
-                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
                     <h5 style="margin-top:.5rem">4</h5>
                 </div>
                 <div>
-                    <i class="fa fa-commenting fa-lg" aria-hidden="true"></i>
-                    <h5 style="margin-top:.5rem">2</h5>  
+                    <i class="fa fa-share fa-lg" aria-hidden="true"></i>
+                    <h5 style="margin-top:.5rem">4</h5>
                 </div>              
             </div>
             <div class="article-preview">
-                <div class="article-title"><a class="article-title-link" href="#" >${this.title}</a></div>
+                <div class="article-title">${this.title}</div>
                 <div class="article-meta">
                     <div class="article-author">by Author Tudor</div>
                     <div class="article-tags">tags</div>
                 </div>
                 <div class="article-preview-body">${this.content}</div> 
-            </div>
-            <div class="article-full">
             </div>      
         `;
    }

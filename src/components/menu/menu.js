@@ -11,9 +11,8 @@ export default class Menu {
 
   render() {
     return `
-    <h2 class="branding">BangEqual</h2>
-    <img class="menu-products"/>
-    <img class="menu-articles"/>
-    <img class="menu-games"/>
+    <h2 class="menu">Shop</h2>
+    <h2 class="menu" style="border-bottom: solid #FF7F50 5px;">Blog</h2>
+    <h2 class="menu">Games</h2>
   `;}
 }

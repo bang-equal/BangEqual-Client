@@ -3,7 +3,8 @@ html, body {
   min-height: 100%;
   width: 100%;
   margin: 0;
-      font-family: "Source Sans Pro","Helvetica Neue",sans-serif;
+  font-family: "Source Sans Pro","Helvetica Neue",sans-serif;
+  overflow-x: hidden;
 }
 
 * {
@@ -28,14 +29,15 @@ html, body {
 
 .header-menu {
   flex: 0 0 30%;
-  width: 100%;
+  width: 85%;
   /* background-color: darkslategray; */
   display: flex;
   justify-content: space-around;
+  margin-left: 22%;
 }
 
 .header-topmargin {
-  background-color: #373a3c;
+  background-color: #2f4f4f;
   flex-grow: 0;
   flex-shrink: 0;
   max-height: 15%;
@@ -56,6 +58,11 @@ html, body {
 	display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-top: solid #2F4F4F 5px;
+}
+
+.ba-content-multiview {
+  max-height: 100%;
 }
 
 .content-center {
@@ -64,20 +71,24 @@ html, body {
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
-  align-items: center;
   flex-wrap: wrap;
-  max-height: 700px;
   order: -1;
-  background: rgba(147, 128, 108, 0.1);
+  /*background: rgba(147, 128, 108, 0.1);*/
+  max-width: 65%;
+  margin-bottom: 1rem;
+  align-items: center;
 }
 
 .content-right {
   padding: 1rem;
   border-radius: 3px;
-  background: rgba(147, 128, 108, 0.1);
+  /*background: rgba(147, 128, 108, 0.1);*/
   flex-basis: 18%;
-  display: flex;
   align-items: center;
+  flex-grow: 0;
+  background-color: #f4f2f0;
+  border-left: solid #2F4F4F 5px;
+
 }
 
 .close-button {
@@ -120,11 +131,9 @@ html, body {
     display: none; } }
 
 
-
-
 @import "./components/topmargin/topmargin.less";
 @import "./components/Menu/menu.less";
 @import "./components/jumbotron/jumbotron.less";
-@import "./components/multicomponent/multicomponent.less";
-@import "./components/adbar/adbar.less";
+@import "./components/multiview/multiview.less";
+@import "./components/adbar-item/adbar-item.less";
 @import "./components/singleview/singleview.less";

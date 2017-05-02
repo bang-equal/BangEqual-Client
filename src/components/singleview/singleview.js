@@ -4,7 +4,7 @@ export default class SingleView {
     this.el.className = "single-view";
 
     this.title = data.articleTitle;
-    this.content = data.articleContent; 
+    this.content = data.articleContentMarkdown; 
     this.author = data.articleAuthor;
     this.topic = data.articleTopic;
     this.tags = data.articleTags;
