@@ -12,19 +12,24 @@ html, body {
   padding: 0;
 }
 
-.ba-wrapper {
+.site-wrapper {
   display: flex;
   height: 100%;
   flex-direction: column;
 }
 
-.ba-header {
+.site-header {
   flex: 0 0 35%;
   order: -1;
   display: flex;
   width: 100%;
   flex-direction: column;
   overflow: hidden;
+}
+
+.site-footer {
+  background-color: #2F4F4F;
+  flex: 0 0 5%;
 }
 
 .header-menu {
@@ -53,7 +58,7 @@ html, body {
   display: flex;
 }
 
-.ba-content {
+.site-content {
   flex: 1 0 auto; 
 	display: flex;
   flex-direction: row;
@@ -61,11 +66,11 @@ html, body {
   border-top: solid #2F4F4F 5px;
 }
 
-.ba-content-multiview {
+.site-content-multiview {
   max-height: 100%;
 }
 
-.content-center {
+.content-main {
   /* make media quiery to change flex direction if desktop to row      */
   display: flex;
   flex-direction: column;
@@ -79,7 +84,7 @@ html, body {
   align-items: center;
 }
 
-.content-right {
+.content-adbar {
   padding: 1rem;
   border-radius: 3px;
   /*background: rgba(147, 128, 108, 0.1);*/
@@ -88,6 +93,9 @@ html, body {
   flex-grow: 0;
   background-color: #f4f2f0;
   border-left: solid #2F4F4F 5px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
 
 }
 

@@ -6,7 +6,7 @@ export class ViewportService {
     getType() {
         let len = this.types.length;
         let content;
-        const doc = document.querySelectorAll('.ba-wrapper')[0];
+        const doc = document.querySelectorAll('.site-wrapper')[0];
 
 
         if (typeof getComputedStyle === 'function') {

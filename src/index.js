@@ -9,6 +9,7 @@ import SingleView from "./components/singleview/singleview";
 import AdbarItem from "./components/adbar-item/adbar-item";
 import * as rest from './services/rest';
 import * as articleservice from './services/article_service';
+import * as designservice from './services/design_service';
 
 
 let mouthcharfunc = () => {
@@ -22,22 +23,35 @@ const menu = new Menu();
 const topmargin = new Topmargin();
 
 const viewportServ = new ViewportService();
-const adBar = new AdbarItem();
-const elementsCount = parseInt(viewportServ.getType());
+const mainCount = parseInt(viewportServ.getType());
+const adbarCount = 2;
 
 let singlepostid = 0;
-let elementCache = [];
-let elementType = '';
-let lastCacheId = '0';
-let firstCacheId = '0';
-let chunkLength = '0'
-let nextViewChunk = '0';
-let chunkSize = '0';
-let chunk = [];
+
+let contentType = '';
+let contentCache = [];
+let lastContentCacheId = '0';
+let firstContentCacheId = '0';
+let contentChunkLength = '0'
+let contentNextViewChunk = '0';
+let contentChunkSize = '0';
+let contentChunk = [];
+
+let adbarType = '';
+let adbarCache = [];
+let lastAdbarCacheId = '0';
+let firstAdbarCacheId = '0';
+let adbarChunkLength = '0'
+let adbarNextViewChunk = '0';
+let adbarChunkSize = '0';
+let adbarChunk = [];
+
 let multview;
 let singleview;
+let adbaritem;
 
-const centerContent =  document.getElementsByClassName('content-center')[0];
+const main =  document.getElementsByClassName('content-main')[0];
+const adbar =  document.getElementsByClassName('content-adbar')[0];
 
 let showSingle = (e) => {
     singlepostid = parseInt(e);
@@ -46,96 +60,162 @@ let showSingle = (e) => {
     if(singlepostid > 0) {
         articleservice.findById(singlepostid).then(function(newresults) {
             //Remove class that limits vertical space
-            var el = document.getElementsByClassName('ba-content')[0];
+            var el = document.getElementsByClassName('site-content')[0];
             if(el.classList) {
-                if(el.classList.contains("ba-content-multiview")) 
-                    el.classList.remove("ba-content-multiview");
+                if(el.classList.contains("site-content-multiview")) 
+                    el.classList.remove("site-content-multiview");
             }
             singleview = new SingleView(newresults, showMult);
-            centerContent.appendChild(singleview.el);
+            content-main.appendChild(singleview.el);
         });       
     }
 }
 
 let showMult = (e) => {
-    centerContent.innerHTML = '';
-    displayChunk();
+    main.innerHTML = '';
+    displayContentChunk();
 }
 
-let fillCache = () => {
+let fillContentCache = () => {
 
-    if(elementCache.length === 0 || type !== elementType) {
-        travCache();
+    if(contentCache.length === 0 ) {
+        travCache("content");
     }
     else {
-        if ( elementsCount !== chunkSize) {
-            travCache();
+        if ( mainCount !== contentChunkSize) {
+            travCache("content");
         }
     }
 }
 
-let travCache = () => {
+let fillAdbarCache = () => {
 
-    switch(elementType) {
-        case ("articles"):              
-            articleservice.findAll().then(function(results) {
+    if(adbarCache.length === 0 ) {
+        travCache("adbar");
+    }
+    else {
+        if ( adbarCount !== adbarChunkSize) {
+            travCache("adbar");
+        }
+    }
+}
 
-                //separate into blocks of elementCount
-                for (let r = 0; r < results.length; r += elementsCount ) {
-                    elementCache.push(results.slice(r, r + elementsCount));
-                }
+let travCache = (type) => {
+    if(type === "adbar") {
+        if(adbarType === "designs") {
+             designservice.findAll().then(function(results) {
 
-                chunkLength = elementCache.length;
-                //get lastchunk
-                let lastChunk = elementCache.slice(elementCache.length - 1);
-                //get lastobject
-                let lastobj = lastChunk[0];
-                //get number of items in chunk
-                chunkSize = lastobj.length;
-                //get lastpostid
-                lastCacheId = lastobj[lastobj.length - 1].id;
-                //chunks are blocks of articlesCount
-                let chunk = elementCache[nextViewChunk];
-                //id of first article in first chunk
-                firstCacheId = chunk[0].id;
-                //draw all elements in current cache chunk
-                displayChunk();
+                     //separate into blocks of adbarCount
+                    for (let r = 0; r < results.length; r += adbarCount ) {
+                        adbarCache.push(results.slice(r, r + adbarCount));
+                    }
+
+                    adbarChunkLength = adbarCache.length;
+                    //get lastchunk
+                    let lastChunk = adbarCache.slice(adbarCache.length - 1);
+                    //get lastobject
+                    let lastobj = lastChunk[0];
+                    //get number of items in chunk
+                    adbarChunkSize = lastobj.length;
+                    //get lastpostid
+                    lastAdbarCacheId = lastobj[lastobj.length - 1].id;
+                    //chunks are blocks of articlesCount
+                    let chunk = adbarCache[adbarNextViewChunk];
+                    //id of first article in first chunk
+                    firstAdbarCacheId = chunk[0].id;
+                    //draw all elements in current cache chunk
+
+                    displayAdbarChunk();
             });
-            break;
-        default:
-            alert('hello');
+        }
+    }
+    else {
+        switch(contentType) {
+            case ("articles"):              
+                articleservice.findAll().then(function(results) {
+
+                    //separate into blocks of mainCount
+                    for (let r = 0; r < results.length; r += mainCount ) {
+                        contentCache.push(results.slice(r, r + mainCount));
+                    }
+
+                    contentChunkLength = contentCache.length;
+                    //get lastchunk
+                    let lastChunk = contentCache.slice(contentCache.length - 1);
+                    //get lastobject
+                    let lastobj = lastChunk[0];
+                    //get number of items in chunk
+                    contentChunkSize = lastobj.length;
+                    //get lastpostid
+                    lastContentCacheId = lastobj[lastobj.length - 1].id;
+                    //chunks are blocks of articlesCount
+                    let chunk = contentCache[contentNextViewChunk];
+                    //id of first article in first chunk
+                    firstContentCacheId = chunk[0].id;
+                    //draw all elements in current cache chunk
+                    displayContentChunk();
+                });
+                break;
+            default:
+                alert('hello from travcache');
+        }
     }
 
  }
 
- let displayChunk = () => {
+ let displayContentChunk = () => {
 
     //Limit amount of vertical space by adding multview class 
-    var el = document.getElementsByClassName('ba-content')[0];
+    var el = document.getElementsByClassName('site-content')[0];
     if(el.classList) {
-        if(!el.classList.contains("ba-content-multiview")) {
-            el.classList.add("ba-content-multiview");
+        if(!el.classList.contains("site-content-multiview")) {
+            el.classList.add("site-content-multiview");
         }
     }
 
-    for (let ele of elementCache[nextViewChunk]) {
+    for (let ele of contentCache[contentNextViewChunk]) {
         //create multivew component
         //Here we are getting all content and only displaying 100 chars
         //Maybe move this to server
         let caption = "";
         caption = ele.articleContent.substring(0, 100);
 
-        switch(elementType) {
+        switch(contentType) {
             case("articles"):
-                multview = new MultiView(ele.articleTitle, caption, ele.articleId, showSingle);
+                multview = new MultiView(ele.articleTitle, caption, ele.articleId, ele.articleAuthor,ele.articleViews, ele.articleShares, ele.articleTags, showSingle);
+                break;
+            default:
+                alert('hello from displaycontentchunk');
         }
         //append new multiview component to parent element
-        centerContent.appendChild(multview.el); 
+        main.appendChild(multview.el); 
     }
  }
 
-elementType = "articles";
- fillCache();
+ let displayAdbarChunk = () => {
+
+     for (let ele of adbarCache[adbarNextViewChunk]) {
+            //create multivew component
+            //Here we are getting all content and only displaying 100 chars
+            //Maybe move this to server
+
+            switch(adbarType) {
+                case("designs"):
+                    adbaritem = new AdbarItem(ele.designId, ele.designTitle, ele.designAuthor, ele.designBLOB, ele.designItemsSold, ele.designShares);
+                    break;
+                default:
+                    alert('hello from displayadbarchunk');
+        }
+        //append new multiview component to parent element
+        adbar.appendChild(adbaritem.el); 
+    }
+ }
+
+contentType = "articles";
+adbarType = "designs"
+fillContentCache();
+fillAdbarCache();
+
 
 
 

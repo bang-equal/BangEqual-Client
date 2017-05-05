@@ -1,6 +1,13 @@
 export default class Adbar {
-  constructor() {
-    this.el = document.getElementsByClassName('content-right')[0];
+  constructor(id, title, author, BLOB, sold, shares) {
+    this.title = title;
+    this.author = author;
+    this.BLOB = BLOB;
+    this.sold = sold;
+    this.shares = shares;
+    this.el = document.createElement("div");
+    this.el.className = "mini-article5";
+    this.el.id = id
    // this.el.addEventListener("click", (e) => { this.onClick(e); });
     this.el.innerHTML = this.render(); 
   }
@@ -11,33 +18,17 @@ export default class Adbar {
 
   render() {
     return `
-      <div class="adbar-title">
-        <h3>Code Revwz</h3>
-      </div>
       <div class="adbar-item">
-        <img class="ad-one" />
+        ${this.BLOB}
       </div>
       <div class="adbar-stats">
         <div>
             <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-            <h5 style="margin-top:.5rem">4</h5>
+            <h5 style="margin-top:.5rem">${this.sold}</h5>
         </div>
         <div>
             <i class="fa fa-share fa-lg" aria-hidden="true"></i>
-            <h5 style="margin-top:.5rem">2</h5>  
-        </div>              
-      </div>
-      <div class="adbar-item">
-        <img class="ad-two" />
-      </div>
-      <div class="adbar-stats">
-        <div>
-            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-            <h5 style="margin-top:.5rem">4</h5>
-        </div>
-        <div>
-            <i class="fa fa-share fa-lg" aria-hidden="true"></i>
-            <h5 style="margin-top:.5rem">2</h5>  
+            <h5 style="margin-top:.5rem">${this.shares}</h5>  
         </div>              
       </div>      
   `;}
