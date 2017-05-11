@@ -41,4 +41,5 @@ launch.json
 tasks.json
 *.jpg
 *.jpeg
+*.png
 *.svg

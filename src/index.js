@@ -19,6 +19,7 @@ const adbar =  document.getElementsByClassName('content-adbar')[0];
 const menu =  document.getElementsByClassName('header-menu')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
+let close;
 
 let dataCache = {};
 
@@ -83,7 +84,11 @@ let showSingle = (e, topic, type) => {
                 articleservice.findById(singlepostid).then(function(newresults) {
                     singleview = new SingleView(newresults, showMult, type);
                     main.appendChild(singleview.el);
-                }); 
+                    close = document.getElementsByClassName('single-close-button')[0];
+                    if(close) {
+                        localStorage.setItem("close", close.offsetTop);
+                    }
+                });        
                 break;
 
             case "designs":
@@ -95,8 +100,7 @@ let showSingle = (e, topic, type) => {
 
             default:
                 console.log('error in showSingle');
-        }
-              
+        }     
     }
     else {
         console.log('error in showSingle');
@@ -309,6 +313,7 @@ fillCache("adbar", "designs");
 let ticking = false
 let windowScroll = 0;
 let menuOffset = 0;
+let closeOffset = 0;
 
 //Detect original distance b/w nav and top and
 //Save value in localstorage
@@ -319,10 +324,12 @@ const onScroll = () => {
 
     windowScroll = window.pageYOffset;
     menuOffset = localStorage.getItem("menuoffset");
+    closeOffset = localStorage.getItem("close");
     //Event throttled by requestAnimationFrame as recommended by Mozilla Foundation  https://developer.mozilla.org/en-US/docs/Web/Events/scroll
     if (!ticking) {
         window.requestAnimationFrame(function() {
         
+        //If window has scrolled below menuoffset
         if(windowScroll >= menuOffset) {
             if(menu.className === "header-menu") {
                 menu.className = "header-menu sticky-header";
@@ -330,11 +337,22 @@ const onScroll = () => {
                 mouthCharFunc(false);
             }
         }
-        else {
+        else if(menuOffset > windowScroll){
             if(menu.className === "header-menu sticky-header") {
                 menu.className = "header-menu";
                 //Resume timeout function changing logo mouth
                 mouthCharFunc(true);
+            }
+        }
+        
+        if(windowScroll >= closeOffset && closeOffset) {
+            if(close && close.className === "single-close-button") {
+                close.className = "single-close-button sticky-button";
+            }
+        }
+        else if(closeOffset && closeOffset > windowScroll) {
+            if(close && close.className === "single-close-button sticky-button") {
+                close.className = "single-close-button";
             }
         }
 

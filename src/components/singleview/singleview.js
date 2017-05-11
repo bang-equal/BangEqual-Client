@@ -13,7 +13,7 @@ export default class SingleView {
     this.el.innerHTML = this.render();
 
     this.closebutton = document.createElement('img');
-    this.closebutton.className = "close-button"
+    this.closebutton.className = "single-close-button"
     this.closebutton.contentType = type;
     this.closebutton.addEventListener("click", (e) => { this.closeClick(e); });
     this.el.appendChild(this.closebutton);
@@ -25,14 +25,14 @@ export default class SingleView {
 
   render() {
     return `
-        <div class="single-wrapper">
-        <h1 class='single-title'>${this.title}</h1>
+      <div class="single-wrapper">
+        <div class="single-title"><h1>${this.title}</h1></div>
         <div class='single-author-bar'>
           <div>${this.author}</div>
           <div>${this.tags}</div>
         </div>
         <div class='single-content'>${this.content}</div>
-        </div>
+      </div>
     `;
   }
 }

@@ -30,7 +30,7 @@ module.exports = {
       },
       // Images: png, gif, jpg, jpeg
       {
-        test: /\.(png|gif|jpe?g)$/,
+        test: /\.(png|svg|gif|jpe?g)$/,
         loader: 'url-loader?name= ./assets/images/[name].[ext]?limit=8192'  // inline base64 URLs for <=8k images, direct URLs for the rest
       },
     ]

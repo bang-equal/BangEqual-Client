@@ -1,7 +1,7 @@
 {
   "name": "webpack-black-triangle",
   "version": "0.1.0",
-  "description": "A minimal webpack/ES6 project template with a spinning black triangle",
+  "description": "",
   "main": "src/main.js",
   "dependencies": {
     "babel-polyfill": "^6.0.16"
