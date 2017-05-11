@@ -4,7 +4,6 @@ html, body {
   width: 100%;
   margin: 0;
   font-family: "Source Sans Pro","Helvetica Neue",sans-serif;
-  overflow-x: hidden;
 }
 
 * {
@@ -12,19 +11,36 @@ html, body {
   padding: 0;
 }
 
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -180px -180px;}
+}
+
+@-webkit-keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -180px -180px;}
+}
+
 .site-wrapper {
   display: flex;
   height: 100%;
   flex-direction: column;
+  /*background-image: url('./sharedelements/images/background.jpg');
+   -webkit-animation: backgroundScroll 15s linear 1;
+    -webkit-animation-fill-mode: forwards;
+    animation: backgroundScroll 15s linear infinite;
+    animation-fill-mode: forwards;
+    animation-direction: alternate; */
 }
 
 .site-header {
-  flex: 0 0 35%;
+  flex: 0 0 42%;
   order: -1;
   display: flex;
   width: 100%;
   flex-direction: column;
   overflow: hidden;
+  background-color: white;
 }
 
 .site-footer {
@@ -34,11 +50,20 @@ html, body {
 
 .header-menu {
   flex: 0 0 30%;
-  width: 85%;
+  width: 100%;
   /* background-color: darkslategray; */
   display: flex;
   justify-content: space-around;
-  margin-left: 22%;
+  padding-left: 5%;
+  max-height: 3rem;
+  z-index: 100;
+  background-color: white;
+}
+
+.header-bottom-border {
+  width: 100%;
+  height: .5rem;
+  background-color: darkslategray;
 }
 
 .header-topmargin {
@@ -63,7 +88,7 @@ html, body {
 	display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: solid #2F4F4F 5px;
+  
 }
 
 .site-content-multiview {
@@ -79,24 +104,29 @@ html, body {
   flex-wrap: wrap;
   order: -1;
   /*background: rgba(147, 128, 108, 0.1);*/
-  max-width: 65%;
+  max-width: 70%;
   margin-bottom: 1rem;
   align-items: center;
+  background-color: white;
+}
+
+.content-adbar-wrapper {
+  background-color: #f7f7f7;
+  border-left: solid darkslategray .5rem;
+  flex-basis: 22%;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-adbar {
   padding: 1rem;
   border-radius: 3px;
   /*background: rgba(147, 128, 108, 0.1);*/
-  flex-basis: 18%;
-  align-items: center;
-  flex-grow: 0;
-  background-color: #f4f2f0;
-  border-left: solid #2F4F4F 5px;
   display: flex;
   flex-direction: column;
-  align-content: space-around;
-
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
 }
 
 .close-button {

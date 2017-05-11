@@ -1,30 +1,34 @@
 export default class Adbar {
-  constructor(id, title, author, BLOB, sold, shares) {
-    this.title = title;
-    this.author = author;
-    this.BLOB = BLOB;
-    this.sold = sold;
-    this.shares = shares;
+  constructor(data, onclick, elementtype) {
+    this.title = data.title;
+    this.author = data.author;
+    this.views = data.views;
+    this.shares = data.shares;
+    this.topic = data.topic;
+    this.clickfunc = onclick;
+
     this.el = document.createElement("div");
-    this.el.className = "mini-article5";
-    this.el.id = id
-   // this.el.addEventListener("click", (e) => { this.onClick(e); });
+    this.el.className = "adbar-item";
     this.el.innerHTML = this.render(); 
+
+    this.content = document.createElement("div");
+    this.content.className = "adbar-content";
+    this.content.addEventListener("click", (e) => { this.onClick(e); });
+    this.content.innerHTML = elementtype === 'articles' ? data.content.substring(0, 100) : data.content;
+    this.content.id = data.id;
+    this.el.appendChild(this.content);
   }
 
- // onClick(evt) {
-       // new Header("_");
-    //}
+  onClick(evt) {
+    this.clickfunc(evt.currentTarget.id, this.topic, this.type);
+  }
 
   render() {
     return `
-      <div class="adbar-item">
-        ${this.BLOB}
-      </div>
       <div class="adbar-stats">
         <div>
             <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-            <h5 style="margin-top:.5rem">${this.sold}</h5>
+            <h5 style="margin-top:.5rem">${this.views}</h5>
         </div>
         <div>
             <i class="fa fa-share fa-lg" aria-hidden="true"></i>

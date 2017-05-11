@@ -1,24 +1,30 @@
-.logo {
-    content: url('/components/jumbotron/images/glasses7.svg');
-    height: 80px;
-    margin-top: 15px;
-}
-
-.jumbo-image {
-    margin-left: 50px;
-}
-
 .jumbo-slideshow {
-    content: url('/components/jumbotron/images/Preview4.jpeg');
     flex: 1;
+    background: linear-gradient(to right, #FFF, transparent), url('/components/jumbotron/images/Preview8.jpg') no-repeat center; 
+    background-size: cover; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.jumbo-text {
+    margin-left: 3rem;
 }
 
 .mouth {
-    margin-left: 100px;
+    margin-top: -1rem;
+    font-size: 3rem;
 }
 
-.branding {
-    margin-top: .8rem;
-    font-family: 'Revalia', cursive;
-    font-size: 42px;
+.logo {
+    content: url('/components/jumbotron/images/Logo Glasses.svg');
+    height: 80%;
+    margin-top: 5px;
+    position: inherit;
+}
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

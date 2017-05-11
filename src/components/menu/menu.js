@@ -1,18 +1,20 @@
 export default class Menu {
-  constructor() {
-    this.el = document.getElementsByClassName('header-menu')[0];
-   // this.el.addEventListener("click", (e) => { this.onClick(e); });
+  constructor(title, onclick) {
+    this.title = title;
+    this.el = document.createElement("div");
+    this.el.className = "menu-wrapper";
+    this.el.id = title;
+    this.clickfunc = onclick;
+    this.el.addEventListener("click", (e) => { this.onClick(e); });
     this.el.innerHTML = this.render(); 
   }
 
- // onClick(evt) {
-       // new Header("_");
-    //}
+  onClick(evt) {
+    this.clickfunc(this.title);
+  }
 
   render() {
     return `
-    <h2 class="menu">Shop</h2>
-    <h2 class="menu" style="border-bottom: solid #FF7F50 5px;">Blog</h2>
-    <h2 class="menu">Games</h2>
+      <h2 class="menu">${this.title}</h2>
   `;}
 }

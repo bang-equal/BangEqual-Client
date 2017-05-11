@@ -1,10 +1,28 @@
-.menu {
+.menu-wrapper {
+    height: 100%;
     font-family: 'Revalia', sans-serif;
-    font-size: 32px;
-    margin: auto;
-    padding: 10px 10px 15px 10px;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.menu:hover {
-    border-bottom: 5px #FF7F50 solid;
+.menu-wrapper:hover {
+    border-bottom: orange solid 2rem;
+}
+
+.menu-wrapper-selected {
+    border-bottom: orange solid .5rem;
+}
+
+.sticky-header {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    border-top: 0;
+    transition: 0.3s;
+    background-color: darkslategrey;
+    color: white;
 }

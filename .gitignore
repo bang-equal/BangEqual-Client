@@ -39,3 +39,6 @@ node_modules
 *.orig
 launch.json
 tasks.json
+*.jpg
+*.jpeg
+*.svg
