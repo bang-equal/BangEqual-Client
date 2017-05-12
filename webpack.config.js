@@ -33,6 +33,13 @@ module.exports = {
         test: /\.(png|svg|gif|jpe?g)$/,
         loader: 'url-loader?name= ./assets/images/[name].[ext]?limit=8192'  // inline base64 URLs for <=8k images, direct URLs for the rest
       },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+        },
+      },
     ]
   },
   devServer: {

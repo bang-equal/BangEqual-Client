@@ -7,6 +7,7 @@ import Topmargin from "./components/topmargin/topmargin";
 import MultiView from "./components/multiview/multiview";
 import SingleView from "./components/singleview/singleview";
 import AdbarItem from "./components/adbar-item/adbar-item";
+import CloseButton from "./sharedelements/closeButton";
 import * as rest from './services/rest';
 import * as articleservice from './services/article_service';
 import * as designservice from './services/design_service';
@@ -19,6 +20,7 @@ const adbar =  document.getElementsByClassName('content-adbar')[0];
 const menu =  document.getElementsByClassName('header-menu')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
+const contentclosebutton =  document.getElementsByClassName('content-closebutton')[0];
 let close;
 
 let dataCache = {};
@@ -82,19 +84,27 @@ let showSingle = (e, topic, type) => {
 
             case "articles":
                 articleservice.findById(singlepostid).then(function(newresults) {
-                    singleview = new SingleView(newresults, showMult, type);
+                    singleview = new SingleView(newresults, type);
                     main.appendChild(singleview.el);
-                    close = document.getElementsByClassName('single-close-button')[0];
-                    if(close) {
-                        localStorage.setItem("close", close.offsetTop);
+
+                    close = new CloseButton(showMult, type)
+                    contentclosebutton.appendChild(close.el);
+                    if(close.el) {
+                        localStorage.setItem("close", close.el.offsetTop);
                     }
                 });        
                 break;
 
             case "designs":
                 designservice.findById(singlepostid).then(function(newresults) {
-                    singleview = new SingleView(newresults, showMult, type);
+                    singleview = new SingleView(newresults, type);
                     main.appendChild(singleview.el);
+
+                    close = new CloseButton(showMult, type)
+                    contentclosebutton.appendChild(close.el);
+                    if(close.el) {
+                        localStorage.setItem("close", close.el.offsetTop);
+                    }
                 }); 
                 break;
 
@@ -111,6 +121,7 @@ let showMult = (e) => {
 
     if(e.currentTarget.contentType) {
         main.innerHTML = '';
+        contentclosebutton.innerHTML = '';
         displayChunk("content", e.currentTarget.contentType);
     }
     else {
@@ -258,7 +269,7 @@ let menuClick = (menuitem) => {
             displayChunk('content', 'articles');
             displayChunk('adbar', 'designs');  
             break;  
-        case "CodeRevwz":
+        case "Code Rev":
             displayChunk('content', 'designs');
             displayChunk('adbar', 'articles');  
             break;
@@ -268,7 +279,7 @@ let menuClick = (menuitem) => {
 }
 
 let createMenu = () => {
-    let items = ["Blog", "CodeRevwz", "Games"];
+    let items = ["Blog", "Code Rev", "About Us"];
     for(let mi of items) {
         menuitem = new Menu(mi, menuClick);
         if( mi=== "Blog") {
@@ -276,8 +287,6 @@ let createMenu = () => {
         }
         menu.appendChild(menuitem.el);
     }
-
-    
 }
 
 const jumbotron = new Jumbotron();
@@ -345,14 +354,14 @@ const onScroll = () => {
             }
         }
         
-        if(windowScroll >= closeOffset && closeOffset) {
-            if(close && close.className === "single-close-button") {
-                close.className = "single-close-button sticky-button";
+        if(windowScroll >= closeOffset - 1 && closeOffset) {
+            if(close && close.el.className === "single-close-button") {
+                close.el.className = "single-close-button sticky-button";
             }
         }
-        else if(closeOffset && closeOffset > windowScroll) {
-            if(close && close.className === "single-close-button sticky-button") {
-                close.className = "single-close-button";
+        else if(closeOffset && closeOffset + 1 > windowScroll) {
+            if(close && close.el.className === "single-close-button sticky-button") {
+                close.el.className = "single-close-button";
             }
         }
 
