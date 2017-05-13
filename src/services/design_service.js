@@ -1,7 +1,7 @@
 import * as rest from './rest';
 
-//let url = "http://bangequal-server.herokuapp.com/blog/blogarticle";
-let url = "http://localhost:5000/shop/shopdesign";
+let url = "http://bangequal-server.herokuapp.com/shop/shopdesign";
+//let url = "http://localhost:5000/shop/shopdesign";
 
 export let findAll = sort => rest.get(url, true);
 
