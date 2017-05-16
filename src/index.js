@@ -284,15 +284,11 @@ const onScroll = () => {
         if(windowScroll >= menuOffset) {
             if(menu.className === "header-menu") {
                 menu.className = "header-menu sticky-header";
-                //Pause timeout function changing logo mouth
-                mouthCharFunc(false);
             }
         }
         else if(menuOffset > windowScroll){
             if(menu.className === "header-menu sticky-header") {
                 menu.className = "header-menu";
-                //Resume timeout function changing logo mouth
-                mouthCharFunc(true);
             }
         }
         
