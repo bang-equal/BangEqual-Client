@@ -1,9 +1,9 @@
 import * as rest from './rest';
 
-let url = "https://bangequal-server.herokuapp.com/blog/blogarticle";
+let url = "https://bangequal.herokuapp.com/home/";
 //let url = "http://localhost:5000/blog/blogarticle";
 
-export let findAll = sort => rest.get(url, true);
+export let findByType = type => rest.get(url + type, true);
 
 //export let findByName = name => rest.get(url, {name});
 

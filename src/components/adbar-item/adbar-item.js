@@ -6,12 +6,12 @@ export default class Adbar {
     this.shares = data.shares;
     this.topic = data.topic;
     this.clickfunc = onclick;
-    this.content = elementtype === 'articles' ? data.content.substring(0, 100) : data.content;
+    this.content = elementtype === 'article' ? data.renderString.substring(0, 100) : data.renderString;
     this.type = elementtype;
 
     this.el = document.createElement("div");
     this.el.className = "adbar-item";
-    this.el.innerHTML = elementtype === 'articles' ? this.renderArticles() : this.renderDesigns(); 
+    this.el.innerHTML = elementtype === 'article' ? this.renderArticles() : this.renderDesigns(); 
 
     //this.content = document.createElement("div");
     //this.content.className = "adbar-content";

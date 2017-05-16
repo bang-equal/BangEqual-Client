@@ -8,7 +8,7 @@ export default class MultiView {
     this.tags = data.tags;
     this.type = elementtype;
     this.topic = data.topic;
-    this.content = elementtype === "articles" ? data.content.substring(0, 100) : data.content;
+    this.content = elementtype === "article" ? data.renderString.substring(0, 100) : data.renderString;
     this.el = document.createElement("div");
     this.el.className = "mini-article";
     this.el.id = data.id

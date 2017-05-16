@@ -9,8 +9,7 @@ import SingleView from "./components/singleview/singleview";
 import AdbarItem from "./components/adbar-item/adbar-item";
 import CloseButton from "./sharedelements/closeButton";
 import * as rest from './services/rest';
-import * as articleservice from './services/article_service';
-import * as designservice from './services/design_service';
+import * as homeservice from './services/home_service';
 
 const topmargin = new Topmargin();
 const viewportServ = new ViewportService();
@@ -79,38 +78,16 @@ let showSingle = (e, topic, type) => {
     }
 
     if(singlepostid && singlepostid > 0) {
+        homeservice.findById(singlepostid).then(function(newresults) {
+            singleview = new SingleView(newresults, type);
+            main.appendChild(singleview.el);
 
-        switch(type) {
-
-            case "articles":
-                articleservice.findById(singlepostid).then(function(newresults) {
-                    singleview = new SingleView(newresults, type);
-                    main.appendChild(singleview.el);
-
-                    close = new CloseButton(showMult, type)
-                    contentclosebutton.appendChild(close.el);
-                    if(close.el) {
-                        localStorage.setItem("close", close.el.offsetTop);
-                    }
-                });        
-                break;
-
-            case "designs":
-                designservice.findById(singlepostid).then(function(newresults) {
-                    singleview = new SingleView(newresults, type);
-                    main.appendChild(singleview.el);
-
-                    close = new CloseButton(showMult, type)
-                    contentclosebutton.appendChild(close.el);
-                    if(close.el) {
-                        localStorage.setItem("close", close.el.offsetTop);
-                    }
-                }); 
-                break;
-
-            default:
-                console.log('error in showSingle');
-        }     
+            close = new CloseButton(showMult, type)
+            contentclosebutton.appendChild(close.el);
+            if(close.el) {
+                localStorage.setItem("close", close.el.offsetTop);
+            }
+        });        
     }
     else {
         console.log('error in showSingle');
@@ -142,27 +119,14 @@ let fillCache = (cacheType, elementType) => {
 }
 
 let travCache = (cacheType, elementType) => {
- 
-    if(elementType === "articles") {
 
-        articleservice.findAll().then(function(results) {           
+    homeservice.findByType(elementType).then(function(results) {           
             assignChunkValues(results, cacheType, elementType);
             displayChunk(cacheType, elementType);
 
             // Set object into storage
-            localStorage.setItem("articles", JSON.stringify(results));
-        });
-    }
-    else if(elementType === "designs") {
-
-        designservice.findAll().then(function(results) {
-            assignChunkValues(results, cacheType, elementType);
-            displayChunk(cacheType, elementType);
-
-            // Set object into storage
-            localStorage.setItem("designs",  JSON.stringify(results));
-        });
-    }  
+            localStorage.setItem(elementType, JSON.stringify(results));
+    });
 }
 
 let assignChunkValues = (results, cacheType, elementType) => {
@@ -266,12 +230,12 @@ let menuClick = (menuitem) => {
 
     switch(menuitem) {
         case "Blog":
-            displayChunk('content', 'articles');
-            displayChunk('adbar', 'designs');  
+            displayChunk('content', 'article');
+            displayChunk('adbar', 'design');  
             break;  
         case "Code Rev":
-            displayChunk('content', 'designs');
-            displayChunk('adbar', 'articles');  
+            displayChunk('content', 'design');
+            displayChunk('adbar', 'article');  
             break;
         default:
             console.log('error in menuclick');
@@ -315,8 +279,8 @@ mouthCharFunc(true);
 
 initDataCache();
 createMenu();
-fillCache("content", "articles");
-fillCache("adbar", "designs");
+fillCache("content", "article");
+fillCache("adbar", "design");
 
 //Initialize scroll event listener vars
 let ticking = false
