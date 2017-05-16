@@ -255,28 +255,6 @@ let createMenu = () => {
 
 const jumbotron = new Jumbotron();
 
-//Function that shows character in mouth of logo
-//Will continue until page scroll down past menu
-let timerId;
-let mouthCharFunc = (trigger) => {
-    
-    if(trigger)
-    {
-        window.clearTimeout(timerId);
-        timerId = setTimeout(function () {
-            let chars = ["__", "0", "P", "----", "L", "V", "+"];
-            let mouthchar =  document.getElementsByClassName('mouth')[0];
-            mouthchar.textContent = chars[Math.floor(Math.random()*chars.length)];
-            mouthCharFunc(true);
-        }, 6000);
-    }
-    else {
-        window.clearTimeout(timerId);
-    }
-};
-mouthCharFunc(true);
-
-
 initDataCache();
 createMenu();
 fillCache("content", "article");

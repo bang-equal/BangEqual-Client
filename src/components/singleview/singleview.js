@@ -4,7 +4,7 @@ export default class SingleView {
     this.el.className = "single-wrapper";
 
     this.title = data.title;
-    this.content = data.content; 
+    this.content = data.renderString; 
     this.author = data.author;
     this.topic = data.topic;
     this.tags = data.tags;
