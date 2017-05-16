@@ -78,7 +78,9 @@ let showSingle = (e, topic, type) => {
     }
 
     if(singlepostid && singlepostid > 0) {
+        console.log(singlepostid);
         homeservice.findById(singlepostid).then(function(newresults) {
+            console.log("here");
             singleview = new SingleView(newresults, type);
             main.appendChild(singleview.el);
 

@@ -7,7 +7,7 @@ export let findByType = type => rest.get(url + type, true);
 
 //export let findByName = name => rest.get(url, {name});
 
-export let findById = id => rest.get(url + id);
+export let findById = id => rest.get(url  + id);
 
 export let createItem = blogarticle => rest.post(url, blogarticle);
 
