@@ -94,8 +94,7 @@ html, body {
   flex: 1 0 auto; 
 	display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  
+  justify-content: flex-end; 
 }
 
 .site-content-multiview {
@@ -103,17 +102,30 @@ html, body {
 }
 
 .content-main-wrapper {
+  flex: 1;
+}
+
+.main-wrapper {
   display: flex;
   flex: 1;
   justify-content: space-around;
+  max-height: 100%;
 }
 
-.content-closebutton {
+.main-filter {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.closebutton {
   height: 100%;
   min-width: 3rem;
 }
 
-.content-main {
+.main {
   /* make media quiery to change flex direction if desktop to row      */
   display: flex;
   flex-direction: column;
@@ -183,6 +195,7 @@ html, body {
 
 @import "./components/topmargin/topmargin.less";
 @import "./components/Menu/menu.less";
+@import "./components/filter-item/filter-item.less";
 @import "./components/jumbotron/jumbotron.less";
 @import "./components/multiview/multiview.less";
 @import "./components/adbar-item/adbar-item.less";

@@ -1,9 +1,13 @@
 import * as rest from './rest';
 
-let url = "https://bangequal.herokuapp.com/home/";
-//let url = "http://localhost:5000/blog/blogarticle";
+//let url = "https://bangequal.herokuapp.com/home/";
+let url = "http://localhost:5000/home/";
 
-export let findByType = type => rest.get(url + type, true);
+export let findByType = (type, chunksize) => rest.get(url + type + "/" + chunksize, true);
+
+export let findByTopic = (topic, chunksize, type) => rest.get(url + "topic/" + type + "/" + topic + "/" + chunksize, true);
+
+export let getAllTopics = (type) => rest.get(url + "topic/getall/" + type)
 
 //export let findByName = name => rest.get(url, {name});
 

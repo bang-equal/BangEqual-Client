@@ -1,15 +1,16 @@
 export default class CloseButton {
-  constructor(onclick, type) {
+  constructor(onclick, type, classname, title) {
     this.el = document.createElement("img");
-    this.el.className = "single-close-button";
-    this.el.contentType = type;
-    this.el.addEventListener("click", (e) => { this.closeClick(e); });
+    this.el.className = classname;
+    this.el.type = type;
+    this.el.id = title + "_close_button";
+    this.el.addEventListener("click", (e) => { this.onClick(e); });
     this.clickfunc = onclick;
-
+    this.el.classList += " hide"; 
   }
 
-  closeClick(evt) {
-      this.clickfunc(evt);
+  onClick(evt) {
+      this.clickfunc(evt.currentTarget.id, evt.currentTarget.type);
+      evt.stopPropagation();
   }
-
 }

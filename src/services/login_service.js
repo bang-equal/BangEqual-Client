@@ -1,7 +1,7 @@
 import * as rest from './rest';
 
-let url = "http://bangequal.herokuapp.com/blog/account/login";
-//let url = "http://localhost:5000/blog/account/login";
+//let url = "http://bangequal.herokuapp.com/blog/account/login";
+let url = "http://localhost:5000/blog/account/login";
 
 export let submitLogin = (data) => 
 {   
