@@ -2,6 +2,7 @@
 
 import {ViewportService} from "./services/viewport-service.js";
 import Menu from "./components/Menu/menu";
+import HomePage from "./components/HomePage/homepage";
 import Jumbotron from "./components/jumbotron/jumbotron";
 import Topmargin from "./components/topmargin/topmargin";
 import MultiView from "./components/multiview/multiview";
@@ -9,8 +10,10 @@ import SingleView from "./components/singleview/singleview";
 import AdbarItem from "./components/adbar-item/adbar-item";
 import Filter from "./components/filter-item/filter-item";
 import CloseButton from "./sharedelements/closeButton";
+import ContentBanner from "./sharedelements/contentbanner"
 import * as rest from './services/rest';
 import * as homeservice from './services/home_service';
+import * as helperservice from './services/helper';
 
 const topmargin = new Topmargin();
 const viewportServ = new ViewportService();
@@ -19,19 +22,40 @@ const sitecontent = document.getElementsByClassName('site-content')[0];
 const main =  document.getElementsByClassName('main')[0];
 const adbar =  document.getElementsByClassName('content-adbar')[0];
 const menu =  document.getElementsByClassName('header-menu')[0];
+const stickymenu =  document.getElementsByClassName('sticky-menu')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const contentclosebutton =  document.getElementsByClassName('closebutton')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
+const header =  document.getElementsByClassName('site-header')[0];
 
 let close;
+let banner;
 let singlepostid = 0;
 let multview;
 let singleview;
 let menuitem;
 let adbaritem;
 let filteritem;
+let homepage;
 
+const showHomeResults = (results, type) => {
+
+    if(results.length > 0) {
+
+            //Display first collection of results
+            for (let ele of results[0]) {
+                //Create individual components representing each object in collection
+                multview = new MultiView(ele, showSingle, type);
+
+                //append new multiview component to parent element
+                main.appendChild(multview.el);
+            }
+        }
+        else {
+            console.log('error in showhomeresults');
+    }
+}
 
 let showSingle = (e, topic, type) => {
     singlepostid = parseInt(e);
@@ -42,6 +66,11 @@ let showSingle = (e, topic, type) => {
     if(el.classList) {
         if(el.classList.contains("site-content-multiview")) 
             el.classList.remove("site-content-multiview");
+    }
+
+    if(filter.className === "main-filter") {
+        filter.className = "main-filter hide";
+        //Pause timeout function changing logo mouth
     }
 
     if(singlepostid && singlepostid > 0) {
@@ -80,35 +109,34 @@ let showMult = (id, type) => {
         }
     }
 
+    if(filter.className === "main-filter hide") {
+        filter.className = "main-filter";
+    }
+
     //Display results saved in localStorage
     let ls;
     ls = localStorage.getItem(type + 'filtered');
     if(!ls) {
         ls = localStorage.getItem(type);
     }
-    
-    ls = JSON.parse(ls);
-    if(ls.length > 0) {
 
-        //Display first collection of results
-        for (let ele of ls[0]) {
-            //Create individual components representing each object in collection
-            multview = new MultiView(ele, showSingle, 'article');
-
-            //append new multiview component to parent element
-            main.appendChild(multview.el);
-        }
+    //Get data from server
+    if(!ls){
+        homeservice.findByType(type, cs).then(function(results) {
+            showHomeResults(results, type);
+        });
     }
+
+    if(ls) {     
+        ls = JSON.parse(ls);
+        showHomeResults(ls, type);
+    }  
     else {
         console.log('error in showmult');
-    }
+    } 
 }
 
-let menuClick = (menuitem) => {
-
-    main.innerHTML = '';
-    adbar.innerHTML = '';
-    filter.innerHTML = '';
+let selectMenuItem = (menuitem) => {
 
     //Remove selected css
     let menuitemselected =  document.getElementsByClassName('menu-wrapper-selected')[0];
@@ -121,97 +149,68 @@ let menuClick = (menuitem) => {
     if(menuitemnext) {
         menuitemnext.classList.add("menu-wrapper-selected");
     }
+}
 
-    let ls;
+let selectMenu = (menuitem) => {
+    if(menuitem === "Home") {
+        if(header.classList.contains("hide")) {
+            header.classList.remove("hide");
+        }
+        if(!stickymenu.classList.contains("hide")) {
+            stickymenu.classList.add("hide");
+        }
+    }
+    else {
+        if(!header.classList.contains("hide")) {
+            header.classList.add("hide");
+        }
+        if(stickymenu.classList.contains("hide")) {
+            stickymenu.classList.remove("hide");
+        }
+    }
+
+}
+
+let menuClick = (menuitem) => {
+
+    main.innerHTML = '';
+    adbar.innerHTML = '';
+    filter.innerHTML = '';
+    
 
     switch(menuitem) {
-        case "Blog":
+        case "Home":
+            selectMenu(menuitem);
+            homepage = new HomePage();
+            main.appendChild(homepage.el);      
+            break;  
+        case "Articles":
+            selectMenu(menuitem);
+            selectMenuItem(menuitem);
             createFilter('article');
-            //Display results saved in localStorage
-            ls = localStorage.getItem('article');
-            if(!ls) {
-                homeservice.findByType('article', cs).then(function(results) {           
-        
-                    //Limit amount of vertical space by adding multview class 
-                    if(sitecontent.classList) {
-                        if(!sitecontent.classList.contains("site-content-multiview")) {
-                            sitecontent.classList.add("site-content-multiview");
-                        }
-                    }
-
-                    //Display first collection of results
-                    for (let ele of results[0]) {
-                        //Create individual components representing each object in collection
-                        multview = new MultiView(ele, showSingle, 'article');
-
-                        //append new multiview component to parent element
-                        main.appendChild(multview.el);
-                    }
-
-                    // Persist results in local storage
-                    localStorage.setItem('article', JSON.stringify(results));
-                });
-            }
-            else {
-                    ls = JSON.parse(ls);
-                    if(ls.length > 0) {
-
-                        //Display first collection of results
-                        for (let ele of ls[0]) {
-                            //Create individual components representing each object in collection
-                            multview = new MultiView(ele, showSingle, 'article');
-
-                            //append new multiview component to parent element
-                            main.appendChild(multview.el);
-                        }
-                    }
-            }
+            showMult('','article'); 
             break;  
         case "Code Revue":
-            createFilter('design');
-             //Display results saved in localStorage
-            ls = localStorage.getItem('design');
-            if(!ls) {
-                homeservice.findByType('design', cs).then(function(results) {           
-        
-                    //Limit amount of vertical space by adding multview class 
-                    if(sitecontent.classList) {
-                        if(!sitecontent.classList.contains("site-content-multiview")) {
-                            sitecontent.classList.add("site-content-multiview");
-                        }
-                    }
-
-                    //Display first collection of results
-                    for (let ele of results[0]) {
-                        //Create individual components representing each object in collection
-                        multview = new MultiView(ele, showSingle, 'design');
-
-                        //append new multiview component to parent element
-                        main.appendChild(multview.el);
-                    }
-
-                    // Persist results in local storage
-                    localStorage.setItem('design', JSON.stringify(results));
-                });
-            }
-            else {
-                    ls = JSON.parse(ls);
-                    if(ls.length > 0) {
-
-                        //Display first collection of results
-                        for (let ele of ls[0]) {
-                            //Create individual components representing each object in collection
-                            multview = new MultiView(ele, showSingle, 'design');
-
-                            //append new multiview component to parent element
-                            main.appendChild(multview.el);
-                        }
-                    }
-            } 
+            selectMenu(menuitem);
+            selectMenuItem(menuitem);
+            banner = new ContentBanner('design');
+            filter.appendChild(banner.el);
+            showMult('','design');
+            break;
+        case "OPP":
+            selectMenu(menuitem);
+            selectMenuItem(menuitem);
+            banner = new ContentBanner('privacy');
+            filter.appendChild(banner.el);
+            showMult('','privacy');
             break;
         default:
-            console.log('error in menuclick');
-    }   
+            homepage = new HomePage();
+            main.appendChild(homepage.el);  
+    }
+
+    var sw = document.getElementsByClassName('site-wrapper')[0];
+    helperservice.fadeIn(sw);
 }
 
 let filterClick = (filteritem, type) => {
@@ -250,13 +249,14 @@ let filterClick = (filteritem, type) => {
 }
 
 let cancelClick = (filteritem, type) => {
+
     //Clear items in multview
     main.innerHTML = '';
 
     //Clear Filtered Local Storage
     localStorage.removeItem(type + "filtered");
 
-      //Limit amount of vertical space by adding multview class 
+    //Limit amount of vertical space by adding multview class 
     if(sitecontent.classList) {
         if(!sitecontent.classList.contains("site-content-multiview")) {
             sitecontent.classList.add("site-content-multiview");
@@ -270,73 +270,24 @@ let cancelClick = (filteritem, type) => {
         filter_item_selected.classList.add("hide");
     }
 
-     //Display results saved in localStorage
-    let ls = localStorage.getItem(type);
-    ls = JSON.parse(ls);
-    if(ls.length > 0) {
-
-        //Display first collection of results
-        for (let ele of ls[0]) {
-            //Create individual components representing each object in collection
-            multview = new MultiView(ele, showSingle, 'article');
-
-            //append new multiview component to parent element
-            main.appendChild(multview.el);
-        }
-    }
-    else {
-        console.log('error in showmult');
-    }
-}
-
-let getHomeData = (filteritem, type) => {
-    //Clear items in multview
-    main.innerHTML = '';
-
-    //Clear Filtered Local Storage
-    localStorage.removeItem(type + "filtered");
-
-      //Limit amount of vertical space by adding multview class 
-    if(sitecontent.classList) {
-        if(!sitecontent.classList.contains("site-content-multiview")) {
-            sitecontent.classList.add("site-content-multiview");
-        }
-    }
-
-    //Remove selected css
-    let filter_item_selected =  document.getElementById(filteritem);
-    if(filter_item_selected && filter_item_selected.classList.contains("show")) {
-        filter_item_selected.classList.remove("show");
-        filter_item_selected.classList.add("hide");
-    }
-
-     //Display results saved in localStorage
-    let ls = localStorage.getItem(type);
-    ls = JSON.parse(ls);
-    if(ls.length > 0) {
-
-        //Display first collection of results
-        for (let ele of ls[0]) {
-            //Create individual components representing each object in collection
-            multview = new MultiView(ele, showSingle, 'article');
-
-            //append new multiview component to parent element
-            main.appendChild(multview.el);
-        }
-    }
-    else {
-        console.log('error in showmult');
-    }
+    showMult('', type);
 }
 
 let createMenu = () => {
-    let items = ["Blog", "Code Revue", "About"];
+    let items = ["Home", "Articles", "Code Revue", "OPP"];
     for(let mi of items) {
         menuitem = new Menu(mi, menuClick);
-        if( mi=== "Blog") {
+        if( mi=== "Home") {
             menuitem.el.classList.add("menu-wrapper-selected");
         }
+        //Append to header menu
         menu.appendChild(menuitem.el);
+        //Clone menuitem element
+        let cn = menuitem.el.cloneNode(true);
+        //Attach a click handler because cloning skips does not
+        cn.addEventListener("click", (e) => { menuClick(e.currentTarget.id)});
+        //Append cloned element to sticky menu
+        stickymenu.appendChild(cn);
     }
 }
 
@@ -346,7 +297,6 @@ let createFilter = (type) => {
     let ls;
     ls = localStorage.getItem(type + 'topics');
     if(!ls) {  
-        console.log('here');
         //Query server for string list of all topics
         homeservice.getAllTopics(type).then(function(results) {           
             
@@ -360,7 +310,6 @@ let createFilter = (type) => {
         });
     }
     else {
-        console.log('yo');
         ls = JSON.parse(ls);
         if(ls.length > 0) {
 
@@ -397,66 +346,21 @@ mouthCharFunc(true);
 
 localStorage.clear();
 createMenu();
-createFilter('article');
-
-homeservice.findByType('article', cs).then(function(results) {           
-    
-    //Limit amount of vertical space by adding multview class 
-    if(sitecontent.classList) {
-        if(!sitecontent.classList.contains("site-content-multiview")) {
-            sitecontent.classList.add("site-content-multiview");
-        }
-    }
-
-    //Display first collection of results
-    for (let ele of results[0]) {
-        //Create individual components representing each object in collection
-        multview = new MultiView(ele, showSingle, 'article');
-
-        //append new multiview component to parent element
-        main.appendChild(multview.el);
-    }
-
-    // Persist results in local storage
-    localStorage.setItem('article', JSON.stringify(results));
-});
+menuClick();
 
 //Initialize scroll event listener vars
 let ticking = false
 let windowScroll = 0;
-let menuOffset = 0;
 let closeOffset = 0;
 
-//Detect original distance b/w nav and top and
-//Save value in localstorage
-localStorage.setItem("menuoffset", menu.offsetTop);
-
-//Scroll eventlistener creates sticky header
-const onScroll = () => {
+const onScrollClose = () => {
 
     windowScroll = window.pageYOffset;
-    menuOffset = localStorage.getItem("menuoffset");
     closeOffset = localStorage.getItem("close");
     //Event throttled by requestAnimationFrame as recommended by Mozilla Foundation  https://developer.mozilla.org/en-US/docs/Web/Events/scroll
     if (!ticking) {
         window.requestAnimationFrame(function() {
-        
-        //If window has scrolled below menuoffset
-        if(windowScroll >= menuOffset) {
-            if(menu.className === "header-menu") {
-                menu.className = "header-menu sticky-header";
-                //Pause timeout function changing logo mouth
-                mouthCharFunc(false);
-            }
-        }
-        else if(menuOffset > windowScroll){
-            if(menu.className === "header-menu sticky-header") {
-                menu.className = "header-menu";
-                //Resume timeout function changing logo mouth
-                mouthCharFunc(true);
-            }
-        }
-      
+             
         //Ensures that close button on singleview always visible
         if(windowScroll >= closeOffset - 1 && closeOffset) {
             if(close && close.el.classList.contains("single-close-button")) {
@@ -473,6 +377,6 @@ const onScroll = () => {
         });
     }
     ticking = true;
-
 }
-document.addEventListener("scroll", onScroll);
+
+document.addEventListener("scroll", onScrollClose);

@@ -10,18 +10,18 @@ export default class MultiView {
     this.topic = data.topic;
     this.content = elementtype === "article" ? data.renderString.substring(0, 100) : data.renderString;
     this.el = document.createElement("div");
-    this.el.className = "mini-article";
+    this.el.className = elementtype === "article" ? 'mini-article' : 'mini-design';    
     this.el.id = data.id
     this.clickfunc = onclick;
     this.el.addEventListener("click", (e) => { this.onClick(e); });
-    this.el.innerHTML = this.render();
+    this.el.innerHTML = elementtype === 'article' ? this.renderArticles() : this.renderDesigns(); 
   }
 
   onClick(evt) {
        this.clickfunc(evt.currentTarget.id, this.topic, this.type);
   }
 
-  render() {
+  renderArticles() {
     return `
         <div class="article-stats-bar">
             <div>
@@ -41,6 +41,12 @@ export default class MultiView {
             </div>
             <div class="article-preview-body">${this.content}</div> 
         </div>      
+    `;
+   }
+
+    renderDesigns() {
+    return ` 
+       ${this.content}      
     `;
    }
 }
