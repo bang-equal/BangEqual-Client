@@ -25,7 +25,6 @@ const menu =  document.getElementsByClassName('header-menu')[0];
 const stickymenu =  document.getElementsByClassName('sticky-menu')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
-const contentclosebutton =  document.getElementsByClassName('closebutton')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
 const header =  document.getElementsByClassName('site-header')[0];
 
