@@ -24,11 +24,8 @@ export default class Jumbotron {
       //return y;  
     //};
     return `
-    <div class="logo-wrapper">
-      <img class="logo" />
-      <h1 class="mouth">$</h1>
-    </div>
     <div class="jumbo-slideshow">
+      <img class="face" />
       <h1 class="jumbo-text">Bang Equal</h1>
     </div>
   `;}

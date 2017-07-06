@@ -1,6 +1,5 @@
 html, body {
   height: 100%;
-  min-height: 100%;
   width: 100%;
   margin: 0;
   font-family: "Source Sans Pro","Helvetica Neue",sans-serif;
@@ -30,14 +29,8 @@ html, body {
 
 .site-wrapper {
   display: flex;
-  height: 100%;
   flex-direction: column;
-  /*background-image: url('./sharedelements/images/background.jpg');
-   -webkit-animation: backgroundScroll 15s linear 1;
-    -webkit-animation-fill-mode: forwards;
-    animation: backgroundScroll 15s linear infinite;
-    animation-fill-mode: forwards;
-    animation-direction: alternate; */
+  height: 100vh;
 }
 
 .site-header {
@@ -67,24 +60,13 @@ html, body {
   background-color: white;
 }
 
-.sticky-header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  border-top: 0;
-  background-color: darkslategrey !important;
-  color: white;
-}
-
 .sticky-menu {
   border-top: 0;
   background-color: darkslategrey ;
   color: white;
   width: 100%;
-  /* background-color: darkslategray; */
   display: flex;
   justify-content: space-around;
-  padding-left: 5%;
   max-height: 3rem;
   z-index: 100;
   position:fixed;
@@ -114,26 +96,30 @@ html, body {
 }
 
 .site-content {
-  flex: 1 0 auto; 
-	display: flex;
+  display: flex;
   flex-direction: row;
+  flex: 1 0 auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: auto; 
   justify-content: flex-end; 
-}
-
-.site-content-multiview {
-  max-height: 100%;
 }
 
 .content-main-wrapper {
   flex: 1;
-  padding-top: 2rem;
 }
 
 .main-wrapper {
   display: flex;
-  flex: 1;
-  justify-content: space-around;
-  max-height: 90%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  align-content: space-around;
+  align-items: center;
+}
+
+.multiview {
+  max-height: 100%;
 }
 
 .main-filter {
@@ -141,27 +127,7 @@ html, body {
   height: 3rem;
   display: flex !important;
   justify-content: space-around;
-  margin-top: 1rem;
-}
-
-.closebutton {
-  height: 100%;
-  min-width: 3rem;
-}
-
-.main {
-  /* make media quiery to change flex direction if desktop to row      */
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  order: -1;
-  /*background: rgba(147, 128, 108, 0.1);*/
-  margin-bottom: 1rem;
-  align-items: center;
-  background-color: white;
-  max-width: 90%;
+  margin-top: 3rem;
 }
 
 .content-adbar-wrapper {
@@ -190,7 +156,12 @@ html, body {
 }
 
 .hide {
-  display: none;
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+  margin-top: 0rem !important;
 }
 
 /* extra small devices (ie. portrait phones)

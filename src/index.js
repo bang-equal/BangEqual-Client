@@ -19,7 +19,7 @@ const topmargin = new Topmargin();
 const viewportServ = new ViewportService();
 const cs = parseInt(viewportServ.getType());
 const sitecontent = document.getElementsByClassName('site-content')[0];
-const main =  document.getElementsByClassName('main')[0];
+const main =  document.getElementsByClassName('main-wrapper')[0];
 const adbar =  document.getElementsByClassName('content-adbar')[0];
 const menu =  document.getElementsByClassName('header-menu')[0];
 const stickymenu =  document.getElementsByClassName('sticky-menu')[0];
@@ -61,16 +61,8 @@ let showSingle = (e, topic, type) => {
     singlepostid = parseInt(e);
     main.innerHTML = '';
 
-    //Remove class that limits vertical space
-    var el = document.getElementsByClassName('site-content')[0];
-    if(el.classList) {
-        if(el.classList.contains("site-content-multiview")) 
-            el.classList.remove("site-content-multiview");
-    }
-
     if(filter.className === "main-filter") {
-        filter.className = "main-filter hide";
-        //Pause timeout function changing logo mouth
+        filter.className = "main-filter invisible";
     }
 
     if(singlepostid && singlepostid > 0) {
@@ -79,17 +71,6 @@ let showSingle = (e, topic, type) => {
 
             singleview = new SingleView(results, type);
             main.appendChild(singleview.el);
-
-            close = new CloseButton(showMult, type, "single-close-button", "");
-            if(close.el.classList.contains("hide")) {
-                close.el.classList.remove("hide");
-                close.el.classList.add("show");
-            }
-
-            contentclosebutton.appendChild(close.el);
-            if(close.el) {
-                localStorage.setItem("close", close.el.offsetTop);
-            }
         });        
     }
     else {
@@ -100,16 +81,15 @@ let showSingle = (e, topic, type) => {
 let showMult = (id, type) => {
 
     main.innerHTML = '';
-    contentclosebutton.innerHTML = '';
 
-    //Limit amount of vertical space by adding multview class 
-    if(sitecontent.classList) {
-        if(!sitecontent.classList.contains("site-content-multiview")) {
-            sitecontent.classList.add("site-content-multiview");
-        }
+    //Add class that limits vertical space
+    if(main.classList) {
+        if(!main.classList.contains("multiview")) 
+            main.classList.add("multiview");
     }
 
-    if(filter.className === "main-filter hide") {
+    //Show results filter
+    if(filter.className === "main-filter invisible") {
         filter.className = "main-filter";
     }
 
@@ -174,7 +154,6 @@ let selectMenu = (menuitem) => {
 let menuClick = (menuitem) => {
 
     main.innerHTML = '';
-    adbar.innerHTML = '';
     filter.innerHTML = '';
     
 
@@ -226,13 +205,6 @@ let filterClick = (filteritem, type) => {
 
     homeservice.findByTopic(filteritem, cs, type).then(function(results) {   
 
-        //Limit amount of vertical space by adding multview class 
-        if(sitecontent.classList) {
-            if(!sitecontent.classList.contains("site-content-multiview")) {
-                sitecontent.classList.add("site-content-multiview");
-            }
-        }
-
         //Retrieve two collections of results
         //Display first collection
         for (let ele of results[0]) {
@@ -255,13 +227,6 @@ let cancelClick = (filteritem, type) => {
 
     //Clear Filtered Local Storage
     localStorage.removeItem(type + "filtered");
-
-    //Limit amount of vertical space by adding multview class 
-    if(sitecontent.classList) {
-        if(!sitecontent.classList.contains("site-content-multiview")) {
-            sitecontent.classList.add("site-content-multiview");
-        }
-    }
 
     //Remove selected css
     let filter_item_selected =  document.getElementById(filteritem);
@@ -323,60 +288,6 @@ let createFilter = (type) => {
 
 const jumbotron = new Jumbotron();
 
-//Function that shows character in mouth of logo
-//Will continue until page scroll down past menu
-let timerId;
-let mouthCharFunc = (trigger) => {
-    
-    if(trigger)
-    {
-        window.clearTimeout(timerId);
-        timerId = setTimeout(function () {
-            let chars = ["__", "0", "P", "----", "L", "V", "+"];
-            let mouthchar =  document.getElementsByClassName('mouth')[0];
-            mouthchar.textContent = chars[Math.floor(Math.random()*chars.length)];
-            mouthCharFunc(true);
-        }, 6000);
-    }
-    else {
-        window.clearTimeout(timerId);
-    }
-};
-mouthCharFunc(true);
-
 localStorage.clear();
 createMenu();
 menuClick();
-
-//Initialize scroll event listener vars
-let ticking = false
-let windowScroll = 0;
-let closeOffset = 0;
-
-const onScrollClose = () => {
-
-    windowScroll = window.pageYOffset;
-    closeOffset = localStorage.getItem("close");
-    //Event throttled by requestAnimationFrame as recommended by Mozilla Foundation  https://developer.mozilla.org/en-US/docs/Web/Events/scroll
-    if (!ticking) {
-        window.requestAnimationFrame(function() {
-             
-        //Ensures that close button on singleview always visible
-        if(windowScroll >= closeOffset - 1 && closeOffset) {
-            if(close && close.el.classList.contains("single-close-button")) {
-                close.el.classList.add("sticky-button");
-            }
-        }
-        else if(closeOffset && closeOffset + 1 > windowScroll) {
-            if(close && close.el.classList.contains("sticky-button")) {
-                close.el.classList.remove("sticky-button");
-            }
-        }
-
-        ticking = false;
-        });
-    }
-    ticking = true;
-}
-
-document.addEventListener("scroll", onScrollClose);
