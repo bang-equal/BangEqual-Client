@@ -168,13 +168,6 @@ let menuClick = (menuitem) => {
             createFilter('article');
             showMult('','article'); 
             break;  
-        case "Code Revue":
-            selectMenu(menuitem);
-            selectMenuItem(menuitem);
-            banner = new ContentBanner('design');
-            filter.appendChild(banner.el);
-            showMult('','design');
-            break;
         case "OPP":
             selectMenu(menuitem);
             selectMenuItem(menuitem);
@@ -238,7 +231,7 @@ let cancelClick = (filteritem, type) => {
 }
 
 let createMenu = () => {
-    let items = ["Home", "Articles", "Code Revue", "OPP"];
+    let items = ["Home", "Articles", "OPP"];
     for(let mi of items) {
         menuitem = new Menu(mi, menuClick);
         if( mi=== "Home") {
