@@ -19,7 +19,6 @@ export default class SingleView {
 
   render() {
     return `
-      <img class="fb-share" />
       <div class="single-title"><h1>${this.title}</h1></div>
       <div class='single-author-bar'>
         <div>${this.author}</div>

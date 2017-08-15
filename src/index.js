@@ -27,6 +27,7 @@ const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
 const header =  document.getElementsByClassName('site-header')[0];
+const sw = document.getElementsByClassName('site-wrapper')[0];
 
 let close;
 let banner;
@@ -80,12 +81,6 @@ let showSingle = (e, topic, type) => {
 let showMult = (id, type) => {
 
     main.innerHTML = '';
-
-    //Add class that limits vertical space
-    if(main.classList) {
-        if(!main.classList.contains("multiview")) 
-            main.classList.add("multiview");
-    }
 
     //Show results filter
     if(filter.className === "main-filter invisible") {
@@ -158,17 +153,34 @@ let menuClick = (menuitem) => {
 
     switch(menuitem) {
         case "Home":
+            if(filter.classList) {
+                if(!filter.classList.contains("hide")) 
+                    filter.classList.add("hide");
+            }
             selectMenu(menuitem);
             homepage = new HomePage();
             main.appendChild(homepage.el);      
             break;  
         case "Articles":
+            //Remove class that limits vertical space
+            if(sw.classList) {
+                if(sw.classList.contains("home")) 
+                    sw.classList.remove("home");
+            }
+            if(filter.classList) {
+                if(filter.classList.contains("hide")) 
+                    filter.classList.remove("hide");
+            }
             selectMenu(menuitem);
             selectMenuItem(menuitem);
             createFilter('article');
             showMult('','article'); 
             break;  
         case "OPP":
+            if(filter.classList) {
+                if(!filter.classList.contains("hide")) 
+                    filter.classList.add("hide");
+            }
             selectMenu(menuitem);
             selectMenuItem(menuitem);
             banner = new ContentBanner('privacy');
@@ -180,7 +192,6 @@ let menuClick = (menuitem) => {
             main.appendChild(homepage.el);  
     }
 
-    var sw = document.getElementsByClassName('site-wrapper')[0];
     helperservice.fadeIn(sw);
 }
 
