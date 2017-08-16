@@ -28,6 +28,8 @@ const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
 const header =  document.getElementsByClassName('site-header')[0];
 const sw = document.getElementsByClassName('site-wrapper')[0];
+const mw = document.getElementsByClassName('menu-wrapper');
+const hamburger = document.getElementsByClassName('hamburger')[0];
 
 let close;
 let banner;
@@ -110,30 +112,19 @@ let showMult = (id, type) => {
     } 
 }
 
-let selectMenuItem = (menuitem) => {
-
-    //Remove selected css
-    let menuitemselected =  document.getElementsByClassName('menu-wrapper-selected')[0];
-    if(menuitemselected) {
-        menuitemselected.classList.remove("menu-wrapper-selected");
-    }
-
-    //Add selected css
-    let menuitemnext =  document.getElementById(menuitem);
-    if(menuitemnext) {
-        menuitemnext.classList.add("menu-wrapper-selected");
-    }
-}
-
 let selectMenu = (menuitem) => {
+    //Only show site header in Home Page
     if(menuitem === "Home") {
         if(header.classList.contains("hide")) {
             header.classList.remove("hide");
         }
-        if(!stickymenu.classList.contains("hide")) {
+        //Hide stickymenu if large screen only
+        if(!stickymenu.classList.contains("hide") &&
+            cs > 5) {
             stickymenu.classList.add("hide");
         }
     }
+    //Hide header and sticky menu to top of page
     else {
         if(!header.classList.contains("hide")) {
             header.classList.add("hide");
@@ -143,6 +134,17 @@ let selectMenu = (menuitem) => {
         }
     }
 
+    //Remove selected css from menu item
+    let menuitemselected =  document.getElementsByClassName('menu-wrapper-selected')[0];
+    if(menuitemselected) {
+        menuitemselected.classList.remove("menu-wrapper-selected");
+    }
+
+    //Add selected css to menu item
+    let menuitemnext =  document.getElementById(menuitem);
+    if(menuitemnext) {
+        menuitemnext.classList.add("menu-wrapper-selected");
+    }
 }
 
 let menuClick = (menuitem) => {
@@ -172,7 +174,6 @@ let menuClick = (menuitem) => {
                     filter.classList.remove("hide");
             }
             selectMenu(menuitem);
-            selectMenuItem(menuitem);
             createFilter('article');
             showMult('','article'); 
             break;  
@@ -182,7 +183,6 @@ let menuClick = (menuitem) => {
                     filter.classList.add("hide");
             }
             selectMenu(menuitem);
-            selectMenuItem(menuitem);
             banner = new ContentBanner('privacy');
             filter.appendChild(banner.el);
             showMult('','privacy');
@@ -191,6 +191,9 @@ let menuClick = (menuitem) => {
             homepage = new HomePage();
             main.appendChild(homepage.el);  
     }
+
+    if(cs < 5) 
+        hamburgerClick();
 
     helperservice.fadeIn(sw);
 }
@@ -245,7 +248,7 @@ let createMenu = () => {
     let items = ["Home", "Articles", "OPP"];
     for(let mi of items) {
         menuitem = new Menu(mi, menuClick);
-        if( mi=== "Home") {
+        if( mi === "Home") {
             menuitem.el.classList.add("menu-wrapper-selected");
         }
         //Append to header menu
@@ -256,6 +259,11 @@ let createMenu = () => {
         cn.addEventListener("click", (e) => { menuClick(e.currentTarget.id)});
         //Append cloned element to sticky menu
         stickymenu.appendChild(cn);
+    }
+
+    if(stickymenu.classList) {
+        if(!stickymenu.classList.contains("hide") && cs > 5) 
+            stickymenu.classList.add("hide");
     }
 }
 
@@ -289,8 +297,23 @@ let createFilter = (type) => {
     }
 }
 
+let hamburgerClick = () => {
+    var i;
+    for (i = 0; i < mw.length; i++) {
+        if(!mw[i].classList.contains("hide")) {
+            mw[i].classList.add("hide");
+        }
+        else {
+            mw[i].classList.remove("hide");
+        }
+    }   
+}
+
 const jumbotron = new Jumbotron();
 
 localStorage.clear();
+hamburger.addEventListener("click", (e) => { 
+   hamburgerClick();
+});
 createMenu();
 menuClick();

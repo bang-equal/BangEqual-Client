@@ -1,3 +1,5 @@
+//Credit to https://github.com/MattTurnure/js-viewport
+
 export class ViewportService {
     constructor() {
         this.types = ['4', '8', '12', '16']

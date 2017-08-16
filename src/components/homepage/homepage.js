@@ -1,6 +1,7 @@
 export default class HomePage {
   constructor() {
     this.el = document.createElement("div");
+    this.el.className = "homepage";
     this.el.innerHTML = this.render(); 
   }
 

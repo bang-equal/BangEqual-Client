@@ -30,6 +30,7 @@ html, body {
   overflow: hidden;
   background-color: white;
   max-height: 35vh;
+  display:none;
 }
 
 .header-menu {
@@ -50,8 +51,9 @@ html, body {
   color: white;
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  max-height: 3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   z-index: 100;
   position:fixed;
 }
@@ -142,6 +144,18 @@ html, body {
   margin-top: 0rem !important;
 }
 
+.mobile-dropdown {
+  display: flex;
+  width: 100%;
+  font-family: myfontfamily;
+  font-size: large;
+}
+
+.hamburger {
+  content: url('../assets/images/menu2.svg');
+  margin: 0 2rem 0 .5rem;
+}
+
 /* extra small devices (ie. portrait phones)
    no media query since this is the default */
 
@@ -154,10 +168,22 @@ html, body {
 /* medium devices (ie. tablets) */
 @media all and (min-width: 768px) {
   body:after {
-    content: "4";
+    content: "6";
     display: none; }
   .content-adbar-wrapper {
     display: inline; 
+  }
+  .site-header {
+    display: flex;
+  }
+  .sticky-menu {
+  flex-direction: row !important;
+  justify-content: space-around !important;
+  align-items: stretch !important;
+  max-height: 3rem;
+  }
+  .mobile-dropdown {
+    display: none !important;
   } }
 
 /* large devices (ie. desktops) */
@@ -186,3 +212,4 @@ html, body {
 @import "./components/multiview/multiview.less";
 @import "./components/adbar-item/adbar-item.less";
 @import "./components/singleview/singleview.less";
+@import "./components/homepage/homepage.less";

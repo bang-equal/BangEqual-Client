@@ -1,7 +1,6 @@
 export default class Jumbotron {
   constructor() {
     this.el = document.getElementsByClassName('header-jumbotron')[0];
-    this.mouthchar = "#";
    // this.el.addEventListener("click", (e) => { this.onClick(e); });
     this.el.innerHTML = this.render(); 
   }
