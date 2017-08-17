@@ -4,7 +4,7 @@ import {ViewportService} from "./services/viewport-service.js";
 import Menu from "./components/Menu/menu";
 import HomePage from "./components/HomePage/homepage";
 import Jumbotron from "./components/jumbotron/jumbotron";
-import Topmargin from "./components/topmargin/topmargin";
+import Login from "./components/login/login";
 import MultiView from "./components/multiview/multiview";
 import SingleView from "./components/singleview/singleview";
 import AdbarItem from "./components/adbar-item/adbar-item";
@@ -15,7 +15,7 @@ import * as rest from './services/rest';
 import * as homeservice from './services/home_service';
 import * as helperservice from './services/helper';
 
-const topmargin = new Topmargin();
+const login = new Login();
 const viewportServ = new ViewportService();
 const cs = parseInt(viewportServ.getType());
 const sitecontent = document.getElementsByClassName('site-content')[0];
@@ -169,6 +169,25 @@ let menuClick = (menuitem) => {
             homepage = new HomePage();
             main.appendChild(homepage.el);  
     }
+
+    //Only small screens
+    
+    //Close menu after hamburger click
+
+    if(cs < 5 ) {
+        let mw1 = document.getElementsByClassName('menu-wrapper'); 
+        var i;
+        for (i = 0; i < mw1.length; i++) {
+            if(!mw1[i].classList.contains("hide")) {
+                mw1[i].classList.add("hide");
+            }
+            else {
+                mw1[i].classList.remove("hide");
+            }
+        }
+    }     
+           
+
 
     helperservice.fadeIn(sw);
 }

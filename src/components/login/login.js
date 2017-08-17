@@ -1,6 +1,6 @@
 import SubmitButton from "./elements/submitButton";
 
-export default class Topmargin {
+export default class login {
   constructor() {
     this.el = document.getElementsByClassName('header-topmargin')[0];
    // this.el.addEventListener("click", (e) => { this.onClick(e); });

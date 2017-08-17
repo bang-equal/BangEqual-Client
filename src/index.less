@@ -42,6 +42,8 @@ html, body {
   display: flex;
   flex-direction: row;
   flex: 1 0 auto;
+  background-color: white;
+  z-index: 10;
 }
 
 .content-main-wrapper {
@@ -102,6 +104,10 @@ html, body {
   margin-top: 0rem !important;
 }
 
+.fixed {
+  position: fixed !important;
+}
+
 /* extra small devices (ie. portrait phones)
    no media query since this is the default */
 
@@ -140,7 +146,7 @@ html, body {
     display: none; } }
 
 
-@import "./components/topmargin/topmargin.less";
+@import "./components/login/login.less";
 @import "./components/Menu/menu.less";
 @import "./components/filter-item/filter-item.less";
 @import "./components/jumbotron/jumbotron.less";

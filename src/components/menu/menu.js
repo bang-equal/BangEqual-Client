@@ -7,7 +7,6 @@ export default class Menu {
     this.el.innerHTML = this.render();
     this.createMenu();
     this.assignHamburgerClick(); 
-    this.doHamburgerClick();
   }
 
   createMenu(){
@@ -19,6 +18,7 @@ export default class Menu {
     }
     //Append to header menu
     this.el.appendChild(menuitem.el);
+
     }
   };
 
@@ -32,6 +32,8 @@ export default class Menu {
 
   doHamburgerClick(){
 
+
+
     let mw = document.getElementsByClassName('menu-wrapper'); 
     var i;
     for (i = 0; i < mw.length; i++) {
@@ -41,7 +43,7 @@ export default class Menu {
         else {
             mw[i].classList.remove("hide");
         }
-    }      
+    }     
   }
 
   render() {
