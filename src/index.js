@@ -22,9 +22,11 @@ const sitecontent = document.getElementsByClassName('site-content')[0];
 const main =  document.getElementsByClassName('main-wrapper')[0];
 const adbar =  document.getElementsByClassName('content-adbar')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
+const ht =  document.getElementsByClassName('header-topmargin')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
 const header =  document.getElementsByClassName('site-header')[0];
+const hm = document.getElementsByClassName('header-menu')[0];
 const sw = document.getElementsByClassName('site-wrapper')[0];
 const mw = document.getElementsByClassName('menu-wrapper');
 const hamburger = document.getElementsByClassName('hamburger')[0];
@@ -130,7 +132,6 @@ let menuClick = (menuitem) => {
     main.innerHTML = '';
     filter.innerHTML = '';
     
-
     switch(menuitem) {
         case "Home":
             if(filter.classList) {
@@ -143,14 +144,11 @@ let menuClick = (menuitem) => {
             break;  
         case "Articles":
             //Remove class that limits vertical space
-            if(sw.classList) {
-                if(sw.classList.contains("home")) 
-                    sw.classList.remove("home");
-            }
             if(filter.classList) {
                 if(filter.classList.contains("hide")) 
                     filter.classList.remove("hide");
             }
+
             selectMenu(menuitem);
             createFilter('article');
             showMult('','article'); 
@@ -185,10 +183,40 @@ let menuClick = (menuitem) => {
                 mw1[i].classList.remove("hide");
             }
         }
+    }
+    else if(menuitem !== "Home") {
+         if(jumbo.classList) {
+                if(!jumbo.classList.contains("hide")) 
+                    jumbo.classList.add("hide");
+            }
+
+            if(ht.classList) {
+                if(!ht.classList.contains("hide")) 
+                    ht.classList.add("hide");
+            }
+
+            if(hm.classList) {
+                if(!hm.classList.contains("sticky-menu")) 
+                    hm.classList.add("sticky-menu");
+            }
+    }
+    else {
+            if(jumbo.classList) {
+                if(jumbo.classList.contains("hide")) 
+                    jumbo.classList.remove("hide");
+            }
+
+            if(ht.classList) {
+                if(ht.classList.contains("hide")) 
+                    ht.classList.remove("hide");
+            }
+
+            if(hm.classList) {
+                if(hm.classList.contains("sticky-menu")) 
+                    hm.classList.remove("sticky-menu");
+            }
     }     
-           
-
-
+    
     helperservice.fadeIn(sw);
 }
 
@@ -273,4 +301,4 @@ const menu = new Menu(menuClick);
 
 localStorage.clear();
 
-menuClick();
+menuClick("Home");
