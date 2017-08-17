@@ -21,8 +21,6 @@ const cs = parseInt(viewportServ.getType());
 const sitecontent = document.getElementsByClassName('site-content')[0];
 const main =  document.getElementsByClassName('main-wrapper')[0];
 const adbar =  document.getElementsByClassName('content-adbar')[0];
-const menu =  document.getElementsByClassName('header-menu')[0];
-const stickymenu =  document.getElementsByClassName('sticky-menu')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
@@ -113,26 +111,6 @@ let showMult = (id, type) => {
 }
 
 let selectMenu = (menuitem) => {
-    //Only show site header in Home Page
-    if(menuitem === "Home") {
-        if(header.classList.contains("hide")) {
-            header.classList.remove("hide");
-        }
-        //Hide stickymenu if large screen only
-        if(!stickymenu.classList.contains("hide") &&
-            cs > 5) {
-            stickymenu.classList.add("hide");
-        }
-    }
-    //Hide header and sticky menu to top of page
-    else {
-        if(!header.classList.contains("hide")) {
-            header.classList.add("hide");
-        }
-        if(stickymenu.classList.contains("hide")) {
-            stickymenu.classList.remove("hide");
-        }
-    }
 
     //Remove selected css from menu item
     let menuitemselected =  document.getElementsByClassName('menu-wrapper-selected')[0];
@@ -192,9 +170,6 @@ let menuClick = (menuitem) => {
             main.appendChild(homepage.el);  
     }
 
-    if(cs < 5) 
-        hamburgerClick();
-
     helperservice.fadeIn(sw);
 }
 
@@ -244,29 +219,6 @@ let cancelClick = (filteritem, type) => {
     showMult('', type);
 }
 
-let createMenu = () => {
-    let items = ["Home", "Articles", "OPP"];
-    for(let mi of items) {
-        menuitem = new Menu(mi, menuClick);
-        if( mi === "Home") {
-            menuitem.el.classList.add("menu-wrapper-selected");
-        }
-        //Append to header menu
-        menu.appendChild(menuitem.el);
-        //Clone menuitem element
-        let cn = menuitem.el.cloneNode(true);
-        //Attach a click handler because cloning skips does not
-        cn.addEventListener("click", (e) => { menuClick(e.currentTarget.id)});
-        //Append cloned element to sticky menu
-        stickymenu.appendChild(cn);
-    }
-
-    if(stickymenu.classList) {
-        if(!stickymenu.classList.contains("hide") && cs > 5) 
-            stickymenu.classList.add("hide");
-    }
-}
-
 let createFilter = (type) => {
 
      //Display results saved in localStorage
@@ -297,23 +249,9 @@ let createFilter = (type) => {
     }
 }
 
-let hamburgerClick = () => {
-    var i;
-    for (i = 0; i < mw.length; i++) {
-        if(!mw[i].classList.contains("hide")) {
-            mw[i].classList.add("hide");
-        }
-        else {
-            mw[i].classList.remove("hide");
-        }
-    }   
-}
-
 const jumbotron = new Jumbotron();
+const menu = new Menu(menuClick);
 
 localStorage.clear();
-hamburger.addEventListener("click", (e) => { 
-   hamburgerClick();
-});
-createMenu();
+
 menuClick();

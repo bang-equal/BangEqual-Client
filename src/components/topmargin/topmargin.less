@@ -19,5 +19,23 @@
     margin-bottom:auto;
 }
 
+.header-topmargin {
+  
+}
+
+/* medium devices (ie. tablets) */
+@media all and (min-width: 768px) {
+    .header-topmargin {
+      background-color: #2f4f4f;
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 3.5vh;
+      width: 100%;
+      order: -1;
+      display: flex;
+      justify-content: flex-end;
+    }
+}
+
 @import "./elements/submitbutton.less";
 

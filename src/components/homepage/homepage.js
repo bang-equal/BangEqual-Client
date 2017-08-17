@@ -7,6 +7,6 @@ export default class HomePage {
 
   render() {
     return `
-      <h1>We are a community of like-minded individuals, who see the world through common lenses. Some of us tech savy, others entrepreneurial, yet we all share a passion for simplifying complexity and understanding concepts at their core. Help to peel away the layers.</h1>
+      <h1>We see the world through common lenses. Some of us are tech savy but not all, yet we share a passion for simplifying complexity and understanding concepts at their core. Keep us going by logging in and sharing your ideas.</h1>
   `;}
 }

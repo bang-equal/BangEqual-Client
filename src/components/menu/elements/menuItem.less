@@ -1,0 +1,30 @@
+.menu-wrapper {
+    height: 100%;
+    font-family: myfontfamily;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.menu-wrapper:hover {
+    border-bottom: initial;
+}
+
+.menu-wrapper-selected {
+    border-bottom:  initial;
+}
+
+/* medium devices (ie. tablets) */
+@media all and (min-width: 768px) {
+    .menu-wrapper {
+        color: black !important;
+    }
+    .menu-wrapper-selected {
+        border-bottom: orange solid .5rem !important;
+    }
+    .menu-wrapper:hover {
+        border-bottom: orange solid .5rem !important;
+    }
+}

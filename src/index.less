@@ -30,54 +30,12 @@ html, body {
   overflow: hidden;
   background-color: white;
   max-height: 35vh;
-  display:none;
-}
-
-.header-menu {
-  flex: 0 0 30%;
-  width: 100%;
-  /* background-color: darkslategray; */
-  display: flex;
-  justify-content: space-around;
-  padding-left: 5%;
-  max-height: 3rem;
-  z-index: 100;
-  background-color: white;
-}
-
-.sticky-menu {
-  border-top: 0;
-  background-color: darkslategrey ;
-  color: white;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  z-index: 100;
-  position:fixed;
 }
 
 .header-bottom-border {
   width: 100%;
   height: .5rem;
   background-color: darkslategray;
-}
-
-.header-topmargin {
-  background-color: #2f4f4f;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 3.5vh;
-  width: 100%;
-  order: -1;
-  display: flex;
-  justify-content: flex-end
-}
-
-.header-jumbotron {
-  flex : 1;
-  display: flex;
 }
 
 .site-content {
@@ -144,18 +102,6 @@ html, body {
   margin-top: 0rem !important;
 }
 
-.mobile-dropdown {
-  display: flex;
-  width: 100%;
-  font-family: myfontfamily;
-  font-size: large;
-}
-
-.hamburger {
-  content: url('../assets/images/menu2.svg');
-  margin: 0 2rem 0 .5rem;
-}
-
 /* extra small devices (ie. portrait phones)
    no media query since this is the default */
 
@@ -173,18 +119,7 @@ html, body {
   .content-adbar-wrapper {
     display: inline; 
   }
-  .site-header {
-    display: flex;
-  }
-  .sticky-menu {
-  flex-direction: row !important;
-  justify-content: space-around !important;
-  align-items: stretch !important;
-  max-height: 3rem;
-  }
-  .mobile-dropdown {
-    display: none !important;
-  } }
+}
 
 /* large devices (ie. desktops) */
 @media all and (min-width: 992px) {
