@@ -32,8 +32,6 @@ export default class Menu {
 
   doHamburgerClick(){
 
-
-
     let mw = document.getElementsByClassName('menu-wrapper'); 
     var i;
     for (i = 0; i < mw.length; i++) {
