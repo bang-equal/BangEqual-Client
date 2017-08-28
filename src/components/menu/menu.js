@@ -48,7 +48,7 @@ export default class Menu {
     return `
       <div class="mobile-menu">
         <img class="mobile-logo" />
-        <h2>BangEqual</h2>
+        <h2 class="mobile-title">BangEqual</h2>
         <img class="hamburger" />
       </div>
   `;}

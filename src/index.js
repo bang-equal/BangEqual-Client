@@ -64,7 +64,7 @@ let showSingle = (e, topic, type) => {
     main.innerHTML = '';
 
     if(filter.className === "main-filter") {
-        filter.className = "main-filter invisible";
+        filter.className = "main-filter hide";
     }
 
     if(singlepostid && singlepostid > 0) {
@@ -84,8 +84,7 @@ let showMult = (id, type) => {
 
     main.innerHTML = '';
 
-    //Show results filter
-    if(filter.className === "main-filter invisible") {
+    if(filter.className === "main-filter hide") {
         filter.className = "main-filter";
     }
 
