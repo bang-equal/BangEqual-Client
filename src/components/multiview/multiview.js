@@ -1,27 +1,29 @@
+import * as articleservice from '../../services/article_service';
+
 export default class MultiView {
 
-  constructor(data, onclick, elementtype) {
-    this.title = data.title;
-    this.author = data.author;
-    this.views = data.views;
-    this.shares = data.shares;
-    this.tags = data.tags;
-    this.type = elementtype;
-    this.topic = data.topic;
-    this.content = elementtype === "article" ? data.renderString.substring(0, 100) : data.renderString;
+  constructor(data, onclick) {
+    this.title = data.articleTitle;
+    this.author = data.articleAuthor;
+    this.views = data.articleViews;
+    this.shares = data.articleShares;
+    this.tags = data.articleTags;
+    this.articleId = data.articleIdFK;
+    this.caption = data.articleCaption;
     this.el = document.createElement("div");
-    this.el.className = elementtype === "article" ? 'mini-article' : 'mini-design';    
-    this.el.id = data.id
+    this.el.className = 'mini-article';    
+    this.el.id = data.articleInfoId;
     this.clickfunc = onclick;
+    
     this.el.addEventListener("click", (e) => { this.onClick(e); });
-    this.el.innerHTML = elementtype === 'article' ? this.renderArticles() : this.renderDesigns(); 
+    this.el.innerHTML = this.render(); 
   }
 
   onClick(evt) {
-       this.clickfunc(evt.currentTarget.id, this.topic, this.type);
+       this.clickfunc(evt.currentTarget.id);
   }
 
-  renderArticles() {
+  render() {
     return `
         <div class="article-stats-bar">
             <div>
@@ -39,14 +41,8 @@ export default class MultiView {
                 <div class="article-author">by ${this.author}</div>
                 <div class="article-tags">${this.tags}</div>
             </div>
-            <div class="article-preview-body">${this.content}</div> 
+            <div class="article-preview-body">${this.caption}</div> 
         </div>      
-    `;
-   }
-
-    renderDesigns() {
-    return ` 
-       ${this.content}      
     `;
    }
 }

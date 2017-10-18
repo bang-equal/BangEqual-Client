@@ -1,17 +1,19 @@
 import * as rest from './rest';
 
 //let url = "https://bangequal.herokuapp.com/home/";
-let url = "http://localhost:5000/home/";
+let url = "http://localhost:5000/articles/";
 
-export let findByType = (type, chunksize) => rest.get(url + type + "/" + chunksize, true);
+export let getArticles = (chunksize) => rest.get(url + chunksize, true);
 
-export let findByTopic = (topic, chunksize, type) => rest.get(url + "topic/" + type + "/" + topic + "/" + chunksize, true);
+export let getArticlesByTag = (chunksize, tag) => rest.get(url + chunksize + "/" + tag, true);
 
-export let getAllTopics = (type) => rest.get(url + "topic/getall/" + type)
+export let getArticleTextById = (id) => rest.get(url + "text/" + id);
+
+export let getArticlesTagsAll = () => rest.get(url + "tags")
 
 //export let findByName = name => rest.get(url, {name});
 
-export let findById = id => rest.get(url  + id);
+
 
 export let createItem = blogarticle => rest.post(url, blogarticle);
 

@@ -12,7 +12,7 @@ import Filter from "./components/filter-item/filter-item";
 import CloseButton from "./sharedelements/closeButton";
 import ContentBanner from "./sharedelements/contentbanner"
 import * as rest from './services/rest';
-import * as homeservice from './services/home_service';
+import * as articleservice from './services/article_service';
 import * as helperservice from './services/helper';
 
 const login = new Login();
@@ -41,17 +41,17 @@ let adbaritem;
 let filteritem;
 let homepage;
 
-const showHomeResults = (results, type) => {
+const showHomeResults = (results) => {
 
     if(results.length > 0) {
 
             //Display first collection of results
             for (let ele of results[0]) {
                 //Create individual components representing each object in collection
-                multview = new MultiView(ele, showSingle, type);
-
-                //append new multiview component to parent element
-                main.appendChild(multview.el);
+                multview = new MultiView(ele, showSingle);
+                
+                    //append new multiview component to parent element
+                main.appendChild(multview.el); 
             }
         }
         else {
@@ -59,55 +59,65 @@ const showHomeResults = (results, type) => {
     }
 }
 
-let showSingle = (e, topic, type) => {
+let showSingle = (e) => {
     singlepostid = parseInt(e);
     main.innerHTML = '';
 
     if(filter.className === "main-filter") {
-        filter.className = "main-filter hide";
+        filter.className = "main-filter invisible";
     }
 
-    if(singlepostid && singlepostid > 0) {
-
-        homeservice.findById(singlepostid).then(function(results) {
-
-            singleview = new SingleView(results, type);
-            main.appendChild(singleview.el);
-        });        
-    }
-    else {
-        console.log('error in showSingle');
+    //Find a record in local storage with same infoid
+    let storageChunksAll = JSON.parse(localStorage.getItem('all'));
+    for (let i = 0; i < storageChunksAll.length; i++) {
+        let storageChunkSingle = storageChunksAll[i];
+        for (let ii = 0; ii < storageChunkSingle.length; ii++) {
+            if(storageChunkSingle[ii].articleInfoId == singlepostid) {
+               //Get article text from server using articleId
+               let articleID = storageChunkSingle[ii].articleIdFK;
+               articleservice.getArticleTextById(articleID).then(function(results) {
+                  localStorage.setItem('single', storageChunkSingle[ii]);
+                  singleview = new SingleView(storageChunkSingle[ii], results.articleText);
+                  main.appendChild(singleview.el);
+              });
+            }
+            else {
+                //record not found in local storage, get record from server
+            }
+        }
     }
 }
 
-let showMult = (id, type) => {
+let showMult = () => {
 
     main.innerHTML = '';
 
-    if(filter.className === "main-filter hide") {
+    //Show results filter
+    if(filter.className === "main-filter invisible") {
         filter.className = "main-filter";
     }
 
     //Display results saved in localStorage
     let ls;
-    ls = localStorage.getItem(type + 'filtered');
+    ls = localStorage.getItem('filtered');
     if(!ls) {
-        ls = localStorage.getItem(type);
+        ls = localStorage.getItem('all');
     }
 
     //Get data from server
     if(!ls){
-        homeservice.findByType(type, cs).then(function(results) {
-            showHomeResults(results, type);
+        articleservice.getArticles(cs).then(function(results) {
+            localStorage.setItem('all', JSON.stringify(results));
+            showHomeResults(results);
         });
     }
 
     if(ls) {     
         ls = JSON.parse(ls);
-        showHomeResults(ls, type);
+        showHomeResults(ls);
     }  
     else {
-        console.log('error in showmult');
+        console.log('error displaying results');
     } 
 }
 
@@ -149,8 +159,8 @@ let menuClick = (menuitem) => {
             }
 
             selectMenu(menuitem);
-            createFilter('article');
-            showMult('','article'); 
+            createFilter();
+            showMult(); 
             break;  
         case "OPP":
             if(filter.classList) {
@@ -160,7 +170,7 @@ let menuClick = (menuitem) => {
             selectMenu(menuitem);
             banner = new ContentBanner('privacy');
             filter.appendChild(banner.el);
-            showMult('','privacy');
+            showMult();
             break;
         default:
             homepage = new HomePage();
@@ -219,7 +229,7 @@ let menuClick = (menuitem) => {
     helperservice.fadeIn(sw);
 }
 
-let filterClick = (filteritem, type) => {
+let filterClick = (filteritem) => {
     //Clear items in multview
     main.innerHTML = '';
 
@@ -230,30 +240,30 @@ let filterClick = (filteritem, type) => {
         filter_item_selected.classList.add("show");
     }
 
-    homeservice.findByTopic(filteritem, cs, type).then(function(results) {   
+    articleservice.getArticlesByTag(cs, filteritem).then(function(results) {   
 
         //Retrieve two collections of results
         //Display first collection
         for (let ele of results[0]) {
             //Create individual components representing each object in collection
-            multview = new MultiView(ele, showSingle, 'article');
+            multview = new MultiView(ele, showSingle);
 
             //append new multiview component to parent element
             main.appendChild(multview.el);
         }
 
         // Save both collections into local storage
-        localStorage.setItem(type + 'filtered', JSON.stringify(results));
+        localStorage.setItem('filtered', JSON.stringify(results));
     });
 }
 
-let cancelClick = (filteritem, type) => {
+let cancelClick = (filteritem) => {
 
     //Clear items in multview
     main.innerHTML = '';
 
     //Clear Filtered Local Storage
-    localStorage.removeItem(type + "filtered");
+    localStorage.removeItem("filtered");
 
     //Remove selected css
     let filter_item_selected =  document.getElementById(filteritem);
@@ -262,25 +272,25 @@ let cancelClick = (filteritem, type) => {
         filter_item_selected.classList.add("hide");
     }
 
-    showMult('', type);
+    showMult();
 }
 
-let createFilter = (type) => {
+let createFilter = () => {
 
      //Display results saved in localStorage
     let ls;
-    ls = localStorage.getItem(type + 'topics');
+    ls = localStorage.getItem('topics');
     if(!ls) {  
         //Query server for string list of all topics
-        homeservice.getAllTopics(type).then(function(results) {           
+        articleservice.getArticlesTagsAll().then(function(results) {           
             
             for(let r of results) {
-                filteritem = new Filter(r, filterClick, cancelClick, type);
+                filteritem = new Filter(r, filterClick, cancelClick);
                 filter.appendChild(filteritem.el);
             }
 
             // Persist results in local storage
-            localStorage.setItem(type + 'topics', JSON.stringify(results));
+            localStorage.setItem('topics', JSON.stringify(results));
         });
     }
     else {
@@ -288,7 +298,7 @@ let createFilter = (type) => {
         if(ls.length > 0) {
 
             for(let r of ls) {
-                filteritem = new Filter(r, filterClick, cancelClick, type);
+                filteritem = new Filter(r, filterClick, cancelClick);
                 filter.appendChild(filteritem.el);
             }
         }

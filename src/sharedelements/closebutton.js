@@ -1,8 +1,7 @@
 export default class CloseButton {
-  constructor(onclick, type, classname, title) {
+  constructor(onclick, classname, title) {
     this.el = document.createElement("img");
     this.el.className = classname;
-    this.el.type = type;
     this.el.id = title + "_close_button";
     this.el.addEventListener("click", (e) => { this.onClick(e); });
     this.clickfunc = onclick;
