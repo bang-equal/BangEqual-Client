@@ -60,32 +60,16 @@ const showHomeResults = (results) => {
 }
 
 let showSingle = (e) => {
-    singlepostid = parseInt(e);
     main.innerHTML = '';
 
     if(filter.className === "main-filter") {
         filter.className = "main-filter invisible";
     }
 
-    //Find a record in local storage with same infoid
-    let storageChunksAll = JSON.parse(localStorage.getItem('all'));
-    for (let i = 0; i < storageChunksAll.length; i++) {
-        let storageChunkSingle = storageChunksAll[i];
-        for (let ii = 0; ii < storageChunkSingle.length; ii++) {
-            if(storageChunkSingle[ii].articleInfoId == singlepostid) {
-               //Get article text from server using articleId
-               let articleID = storageChunkSingle[ii].articleIdFK;
-               articleservice.getArticleTextById(articleID).then(function(results) {
-                  localStorage.setItem('single', storageChunkSingle[ii]);
-                  singleview = new SingleView(storageChunkSingle[ii], results.articleText);
-                  main.appendChild(singleview.el);
-              });
-            }
-            else {
-                //record not found in local storage, get record from server
-            }
-        }
-    }
+    articleservice.getArticleTextById(e.articleIdFK).then(function(results) {
+        singleview = new SingleView(e, results.articleText);
+        main.appendChild(singleview.el);
+    });
 }
 
 let showMult = () => {

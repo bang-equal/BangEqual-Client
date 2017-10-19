@@ -4,14 +4,11 @@ export default class SingleView {
   constructor(data, articleText) {
     this.el = document.createElement("div");
     this.el.className = "single-wrapper";
-    this.id = data.articleIdFK;
     this.title = data.articleTitle;
-    //this.content = data.renderString; 
     this.author = data.articleAuthor;
     this.tags = data.articleTags;
     this.text = articleText;
     //this.clickfunc = onclick;
-
     this.el.innerHTML = this.render();
   }
 

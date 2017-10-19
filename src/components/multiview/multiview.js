@@ -12,7 +12,7 @@ export default class MultiView {
     this.caption = data.articleCaption;
     this.el = document.createElement("div");
     this.el.className = 'mini-article';    
-    this.el.id = data.articleInfoId;
+    this.el.data = data;
     this.clickfunc = onclick;
     
     this.el.addEventListener("click", (e) => { this.onClick(e); });
@@ -20,7 +20,7 @@ export default class MultiView {
   }
 
   onClick(evt) {
-       this.clickfunc(evt.currentTarget.id);
+       this.clickfunc(evt.currentTarget.data);
   }
 
   render() {
