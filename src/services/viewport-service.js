@@ -2,7 +2,7 @@
 
 export class ViewportService {
     constructor() {
-        this.types = ['4', '8', '12', '16']
+        this.types = ['4', '6', '8', '12', '16']
     }
     
     getType() {

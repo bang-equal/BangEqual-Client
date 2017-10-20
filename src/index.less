@@ -29,7 +29,13 @@ html, body {
   flex-direction: column;
   overflow: hidden;
   background-color: white;
-  max-height: 35vh;
+  height: 35vh;
+  background: url('../assets/images/banner_image1.jpg') no-repeat center; 
+  background-size: cover;
+}
+
+.remove-image {
+  height: initial !important;
 }
 
 .header-bottom-border {
@@ -59,7 +65,6 @@ html, body {
   align-content: space-around;
   align-items: center;
   max-height: 150%;
-  margin-top: 2rem;
   padding: 0 2rem 0 2rem;
 }
 
@@ -110,6 +115,12 @@ html, body {
   position: fixed !important;
 }
 
+.content-adbar1 {
+  content: url('../assets/images/OPP_Ad.svg');
+  width: 15rem;
+  margin-top: 1rem;
+}
+
 /* extra small devices (ie. portrait phones)
    no media query since this is the default */
 
@@ -122,29 +133,25 @@ html, body {
 /* medium devices (ie. tablets) */
 @media all and (min-width: 768px) {
   body:after {
-    content: "6";
-    display: none; }
-  .content-adbar-wrapper {
-    display: inline; 
-  }
-}
+    content: "6" !important;
+    display: none; } }
 
 /* large devices (ie. desktops) */
 @media all and (min-width: 992px) {
   body:after {
-    content: "8";
+    content: "8" !important;
     display: none; } }
 
 /* x large devices (ie. large desktops) */
 @media all and (min-width: 1200px) {
   body:after {
-    content: "8";
+    content: "8" !important;
     display: none; } }
 
 /* xxl large devices (ie. tv) */
 @media all and (min-width: 1920px) {
   body:after {
-    content: "16";
+    content: "16" !important;
     display: none; } }
 
 

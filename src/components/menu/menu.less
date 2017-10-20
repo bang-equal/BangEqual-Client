@@ -41,12 +41,11 @@
 /* medium devices (ie. tablets) */
 @media all and (min-width: 768px) {
   .site-header .header-menu {
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: transparent;
     flex-direction: row;
     flex: 0 0 30%;
     justify-content: space-around;
-    padding-left: 5%;
     max-height: 3rem;
     position: static;
     align-items: stretch;
@@ -58,6 +57,8 @@
     background-color: darkslategray !important;
     position:fixed !important;
     z-index: 100;
+    min-height: 2.5rem;
+    padding-top: .5rem;
   }
   .mobile-dropdown {
     display: none !important;

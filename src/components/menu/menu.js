@@ -10,7 +10,7 @@ export default class Menu {
   }
 
   createMenu(){
-    let items = ["Home", "Articles", "OPP"];
+    let items = ["Bang Equal", "Articles", "Shop"];
     for(let mi of items) {
     let menuitem = new MenuItem(mi, this.menuItemClick);
     if( mi === "Home") {

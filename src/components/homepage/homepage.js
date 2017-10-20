@@ -1,12 +1,30 @@
 export default class HomePage {
   constructor() {
     this.el = document.createElement("div");
-    this.el.className = "homepage";
+    this.el.className = "home-wrapper";
     this.el.innerHTML = this.render(); 
   }
 
   render() {
     return `
-      <h1>We see the world through common lenses. Some of us are tech savy but not all, yet we share a passion for simplifying complexity and understanding concepts at their core. Keep us going by logging in and sharing your ideas.</h1>
+    <div class='home-item'>
+    <div class='home-icon-wrapper'>
+      <div class='home1-icon'></div>
+    </div>
+    <div class='home-text'>
+      <div class='home-title'>Learn To Nerd</div>
+      <p>We strive to simplify complexity and understand concepts at their core. Technology articles can quickly get confusing when too much banter is dedicated to vendor lock-in. Underneath it all are the same protocols and languages that have been used for a half century. Our articles help you actually get it.</p>
+    </div>
+    </div>
+
+    <div class='home-item'>
+    <div class='home-icon-wrapper'>
+      <div class='home2-icon'></div>
+    </div>
+    <div class='home-text'>
+      <div class='home-title'>Fashion Forward, Tech Savvy</div>
+      <p>Are you looking to cultivate a look with a touch of Nerd? Just because you can parse JSON doesnt mean your not trendy. Check out our Bang Equal shop today for apparel designs will highlight the real you.</p>
+    </div>
+    </div>
   `;}
 }

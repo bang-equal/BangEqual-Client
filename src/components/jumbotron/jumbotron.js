@@ -23,9 +23,6 @@ export default class Jumbotron {
       //return y;  
     //};
     return `
-    <div class="jumbo-slideshow">
-      <img class="face" />
-      <h1 class="jumbo-text">Bang Equal</h1>
-    </div>
+    <img class="face" />
   `;}
 }

@@ -20,7 +20,7 @@ const viewportServ = new ViewportService();
 const cs = parseInt(viewportServ.getType());
 const sitecontent = document.getElementsByClassName('site-content')[0];
 const main =  document.getElementsByClassName('main-wrapper')[0];
-const adbar =  document.getElementsByClassName('content-adbar')[0];
+const adbar =  document.getElementsByClassName('content-adbar1')[0];
 const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const ht =  document.getElementsByClassName('header-topmargin')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
@@ -28,6 +28,7 @@ const filter =  document.getElementsByClassName('main-filter')[0];
 const header =  document.getElementsByClassName('site-header')[0];
 const hm = document.getElementsByClassName('header-menu')[0];
 const sw = document.getElementsByClassName('site-wrapper')[0];
+const sh = document.getElementsByClassName('site-header')[0];
 const mw = document.getElementsByClassName('menu-wrapper');
 const hamburger = document.getElementsByClassName('hamburger')[0];
 
@@ -126,10 +127,14 @@ let menuClick = (menuitem) => {
     filter.innerHTML = '';
     
     switch(menuitem) {
-        case "Home":
+        case "Bang Equal":
             if(filter.classList) {
                 if(!filter.classList.contains("hide")) 
                     filter.classList.add("hide");
+            }
+            if(sh.classList) {
+                if(sh.classList.contains("remove-image")) 
+                        sh.classList.remove("remove-image");
             }
             selectMenu(menuitem);
             homepage = new HomePage();
@@ -158,14 +163,13 @@ let menuClick = (menuitem) => {
             break;
         default:
             homepage = new HomePage();
-            main.appendChild(homepage.el);  
+            contentmain.appendChild(homepage.el);  
     }
 
     //Only small screens
     
     //Close menu after hamburger click
-
-    if(cs < 5 ) {
+    if(cs < 6 ) {
         let mw1 = document.getElementsByClassName('menu-wrapper'); 
         var i;
         for (i = 0; i < mw1.length; i++) {
@@ -177,21 +181,26 @@ let menuClick = (menuitem) => {
             }
         }
     }
-    else if(menuitem !== "Home") {
+    else if(menuitem !== "Bang Equal") {
          if(jumbo.classList) {
-                if(!jumbo.classList.contains("hide")) 
-                    jumbo.classList.add("hide");
-            }
+            if(!jumbo.classList.contains("hide")) 
+                jumbo.classList.add("hide");
+        }
 
-            if(ht.classList) {
-                if(!ht.classList.contains("hide")) 
+        if(ht.classList) {
+            if(!ht.classList.contains("hide")) 
                     ht.classList.add("hide");
-            }
+        }
 
-            if(hm.classList) {
-                if(!hm.classList.contains("sticky-menu")) 
+        if(hm.classList) {
+            if(!hm.classList.contains("sticky-menu")) 
                     hm.classList.add("sticky-menu");
-            }
+        }
+
+        if(sh.classList) {
+            if(!sh.classList.contains("remove-image")) 
+                    sh.classList.add("remove-image");
+        }
     }
     else {
             if(jumbo.classList) {
@@ -294,4 +303,4 @@ const menu = new Menu(menuClick);
 
 localStorage.clear();
 
-menuClick("Home");
+menuClick("Bang Equal");
