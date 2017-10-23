@@ -29,9 +29,6 @@ html, body {
   flex-direction: column;
   overflow: hidden;
   background-color: white;
-  height: 35vh;
-  background: url('../assets/images/banner_image1.jpg') no-repeat center; 
-  background-size: cover;
 }
 
 .remove-image {
@@ -115,12 +112,6 @@ html, body {
   position: fixed !important;
 }
 
-.content-adbar1 {
-  content: url('../assets/images/OPP_Ad.svg');
-  width: 15rem;
-  margin-top: 1rem;
-}
-
 /* extra small devices (ie. portrait phones)
    no media query since this is the default */
 
@@ -134,7 +125,14 @@ html, body {
 @media all and (min-width: 768px) {
   body:after {
     content: "6" !important;
-    display: none; } }
+    display: none; }
+  
+  .site-header {
+    background-image: url('../assets/images/banner_image1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right;
+  }}
 
 /* large devices (ie. desktops) */
 @media all and (min-width: 992px) {

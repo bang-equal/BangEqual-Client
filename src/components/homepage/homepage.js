@@ -23,7 +23,7 @@ export default class HomePage {
     </div>
     <div class='home-text'>
       <div class='home-title'>Fashion Forward, Tech Savvy</div>
-      <p>Are you looking to cultivate a look with a touch of Nerd? Just because you can parse JSON doesnt mean your not trendy. Check out our Bang Equal shop today for apparel designs will highlight the real you.</p>
+      <p>Are you looking to cultivate a look with a touch of Nerd? Just because you can parse JSON doesnt mean you cannot be stylish. Check out the Bang Equal shop today for apparel designs will highlight the true you.</p>
     </div>
     </div>
   `;}

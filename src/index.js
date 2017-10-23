@@ -20,8 +20,6 @@ const viewportServ = new ViewportService();
 const cs = parseInt(viewportServ.getType());
 const sitecontent = document.getElementsByClassName('site-content')[0];
 const main =  document.getElementsByClassName('main-wrapper')[0];
-const adbar =  document.getElementsByClassName('content-adbar1')[0];
-const adbartitle =  document.getElementsByClassName('adbar-title')[0];
 const ht =  document.getElementsByClassName('header-topmargin')[0];
 const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
@@ -300,6 +298,7 @@ let createFilter = () => {
 
 const jumbotron = new Jumbotron();
 const menu = new Menu(menuClick);
+const adbar = new AdbarItem();
 
 localStorage.clear();
 
