@@ -49,8 +49,6 @@ export default class Menu {
   render() {
     return `
       <div class="mobile-menu">
-        <img class="mobile-logo" />
-        <h2>BangEqual</h2>
         <img class="hamburger" />
       </div>
   `;}

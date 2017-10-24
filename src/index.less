@@ -22,7 +22,10 @@ html, body {
 }
 
 .site-header {
-  flex: 0 0 auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 3rem;
+  display:flex;
   order: -1;
   display: flex;
   width: 100%;
@@ -32,7 +35,7 @@ html, body {
 }
 
 .remove-image {
-  height: initial !important;
+  flex-basis: 3rem !important;
 }
 
 .header-bottom-border {
@@ -73,26 +76,6 @@ html, body {
   margin-top: 4rem;
 }
 
-.content-adbar-wrapper {
-  background-color: #f7f7f7;
-  border-left: solid darkslategray .5rem;
-  flex-basis: 22%;
-  display: flex;
-  flex-direction: column;
-  display:none;
-}
-
-.content-adbar {
-  padding: 1rem;
-  border-radius: 3px;
-  /*background: rgba(147, 128, 108, 0.1);*/
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  flex: 1;
-}
-
 .content-banner-wrapper {
   background-color: yellow;
   height: 2rem;
@@ -128,10 +111,12 @@ html, body {
     display: none; }
   
   .site-header {
-    background-image: url('../assets/images/banner_image1.jpg');
+    background-image: url('../assets/images/Untitled3.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: top right;
+    background-position: center right;
+    flex-basis: 50%;
+    border-bottom: .5rem solid darkslategray;
   }}
 
 /* large devices (ie. desktops) */

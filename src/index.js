@@ -144,6 +144,10 @@ let menuClick = (menuitem) => {
                 if(filter.classList.contains("hide")) 
                     filter.classList.remove("hide");
             }
+            if(sh.classList) {
+                if(!sh.classList.contains("remove-image")) 
+                        sh.classList.add("remove-image");
+            }
 
             selectMenu(menuitem);
             createFilter();

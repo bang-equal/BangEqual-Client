@@ -8,6 +8,15 @@
     z-index: 100;
 }
 
+ul li:nth-last-child(n+3) {
+    position: absolute;
+    height: 100%;
+    font-family: myfontfamily;
+    font-size: large;
+    z-index: 100;
+    margin-left: 1rem;
+}
+
 .menu-wrapper:hover {
     color: orange !important;
 }
@@ -15,3 +24,10 @@
 .menu-wrapper-selected {
     color:  orange !important;
 }
+
+@media all and (min-width: 768px) {
+    ul li:nth-last-child(n+3) {
+        position: relative !important;
+        margin-left: 1rem;
+    }
+  }

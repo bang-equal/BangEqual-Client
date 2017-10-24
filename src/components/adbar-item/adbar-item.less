@@ -2,11 +2,32 @@
     content: url('../../../assets/images/OPP_Ad.svg');
     width: 15rem;
     margin-top: 1rem;
-  }
+}
+
+.content-adbar-wrapper {
+  background-color: #f7f7f7;
+  border-left: solid darkslategray .5rem;
+  flex-basis: 22%;
+  display:none;
+}
+
+.content-adbar {
+  padding: 1rem;
+  border-radius: 3px;
+  /*background: rgba(147, 128, 108, 0.1);*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+}
+
 
 /* medium devices (ie. tablets) */
 @media all and (min-width: 768px) {
-    .content-adbar-wrapper {
-      display: inline; 
+    .content-adbar-wrapper { 
+      display: flex;
+      flex-direction: column;
+      padding-top: 3rem;
     }
   }
