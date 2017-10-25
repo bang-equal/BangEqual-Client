@@ -126,55 +126,67 @@ let menuClick = (menuitem) => {
     
     switch(menuitem) {
         case "Bang Equal":
+            //Do not show filter on home screen
             if(filter.classList) {
                 if(!filter.classList.contains("hide")) 
                     filter.classList.add("hide");
             }
+            //Ensure show full header with jumbotron
             if(sh.classList) {
-                if(sh.classList.contains("remove-image")) 
-                        sh.classList.remove("remove-image");
+                if(sh.classList.contains("shrink-header")) 
+                        sh.classList.remove("shrink-header");
             }
-            selectMenu(menuitem);
+
             homepage = new HomePage();
             main.appendChild(homepage.el);      
             break;  
+
         case "Articles":
-            //Remove class that limits vertical space
-            if(filter.classList) {
+            //show filter only on large screens
+            //TODO: make mobile filter with scroll
+            if(filter.classList && cs > 5) {
                 if(filter.classList.contains("hide")) 
                     filter.classList.remove("hide");
             }
-            if(sh.classList) {
-                if(!sh.classList.contains("remove-image")) 
-                        sh.classList.add("remove-image");
+
+            //shrink site header to convert to sticky menu
+            if(sh.classList && cs > 5) {
+                if(!sh.classList.contains("shrink-header")) 
+                        sh.classList.add("shrink-header");
             }
 
-            selectMenu(menuitem);
             createFilter();
             showMult(); 
-            break;  
-        case "OPP":
+            break; 
+
+        case "Shop":
             if(filter.classList) {
                 if(!filter.classList.contains("hide")) 
                     filter.classList.add("hide");
             }
-            selectMenu(menuitem);
+            //shrink site header to convert to sticky menu
+            if(sh.classList && cs > 5) {
+                if(!sh.classList.contains("shrink-header")) 
+                        sh.classList.add("shrink-header");
+            }
+
             banner = new ContentBanner('privacy');
             filter.appendChild(banner.el);
             showMult();
             break;
+
         default:
             homepage = new HomePage();
             contentmain.appendChild(homepage.el);  
     }
+    //Add selected css to menu item
+    selectMenu(menuitem);
 
-    //Only small screens
-    
+    //Small screens
     //Close menu after hamburger click
     if(cs < 6 ) {
         let mw1 = document.getElementsByClassName('menu-wrapper'); 
-        var i;
-        for (i = 0; i < mw1.length; i++) {
+        for (let i = 0; i < mw1.length; i++) {
             if(!mw1[i].classList.contains("hide")) {
                 mw1[i].classList.add("hide");
             }
@@ -183,38 +195,15 @@ let menuClick = (menuitem) => {
             }
         }
     }
+    //Large screens
     else if(menuitem !== "Bang Equal") {
-         if(jumbo.classList) {
-            if(!jumbo.classList.contains("hide")) 
-                jumbo.classList.add("hide");
-        }
-
-        if(ht.classList) {
-            if(!ht.classList.contains("hide")) 
-                    ht.classList.add("hide");
-        }
-
+        //Convert menu to sticky
         if(hm.classList) {
             if(!hm.classList.contains("sticky-menu")) 
                     hm.classList.add("sticky-menu");
         }
-
-        if(sh.classList) {
-            if(!sh.classList.contains("remove-image")) 
-                    sh.classList.add("remove-image");
-        }
     }
     else {
-            if(jumbo.classList) {
-                if(jumbo.classList.contains("hide")) 
-                    jumbo.classList.remove("hide");
-            }
-
-            if(ht.classList) {
-                if(ht.classList.contains("hide")) 
-                    ht.classList.remove("hide");
-            }
-
             if(hm.classList) {
                 if(hm.classList.contains("sticky-menu")) 
                     hm.classList.remove("sticky-menu");
