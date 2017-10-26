@@ -23,6 +23,6 @@ export default class Jumbotron {
       //return y;  
     //};
     return `
-    <img class="face" />
+    <img class="face" /><div style="width:8rem">&nbsp;</div><div style="width:4rem">&nbsp;</div>
   `;}
 }

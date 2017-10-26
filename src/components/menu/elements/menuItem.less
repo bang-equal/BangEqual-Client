@@ -1,14 +1,17 @@
 .menu-wrapper {
     height: 100%;
-    font-family: myfontfamily;
-    font-size: large;
     display: flex;
     flex-direction: column;
     justify-content: center;
     z-index: 100;
 }
 
-ul li:nth-last-child(n+3) {
+.menu-item {
+    font-size: x-large;
+    font-family: myfontfamily;
+}
+
+ul.header-menu li:nth-last-child(n+3) {
     position: absolute;
     height: 100%;
     font-family: myfontfamily;
@@ -26,8 +29,12 @@ ul li:nth-last-child(n+3) {
 }
 
 @media all and (min-width: 768px) {
-    ul li:nth-last-child(n+3) {
+    ul.header-menu li:nth-last-child(n+3) {
         position: relative !important;
         margin-left: 1rem;
+    }
+
+    .menu-item {
+        font-size: xx-large;
     }
   }

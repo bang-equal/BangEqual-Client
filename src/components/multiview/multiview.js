@@ -28,18 +28,18 @@ export default class MultiView {
         <div class="article-stats-bar">
             <div>
                 <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
-                <h5 style="margin-top:.5rem">${this.views}</h5>
+                <h5 style="margin-top:.5rem">&nbsp;</h5>
             </div>
             <div>
                 <i class="fa fa-share fa-lg" aria-hidden="true"></i>
-                <h5 style="margin-top:.5rem">${this.shares}</h5>
+                <h5 style="margin-top:.5rem">&nbsp;</h5>
             </div>              
         </div>
         <div class="article-preview">
             <div class="article-title">${this.title}</div>
             <div class="article-meta">
                 <div class="article-author">by ${this.author}</div>
-                <div class="article-tags">${this.tags}</div>
+                <div class="article-tags">&nbsp;</div>
             </div>
             <div class="article-preview-body">${this.caption}</div> 
         </div>      

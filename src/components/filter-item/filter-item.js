@@ -1,13 +1,14 @@
 import CloseButton from "../../sharedelements/closeButton";
 
 export default class Filter {
-  constructor(title, onclick, cancelclick) {
+  constructor(title, onclick, cancelclick, backgroundColor) {
     this.title = title;
-    this.el = document.createElement("div");
+    this.el = document.createElement("li");
     this.el.className = "filter-item";
     this.el.id = title;
     this.clickfunc = onclick;
     this.el.addEventListener("click", (e) => { this.onClick(e); });
+    this.el.style.backgroundColor = backgroundColor;
     this.el.innerHTML = this.render();
 
     const cb = new CloseButton(cancelclick, "filter-close-button", title);
@@ -20,6 +21,6 @@ export default class Filter {
 
   render() {
     return `
-        <h2>${this.title}</h2>     
+        <p>${this.title}</p>     
   `;}
 }

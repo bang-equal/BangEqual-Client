@@ -1,6 +1,12 @@
 'use strict';
 
+//Import Services
+import * as rest from './services/rest';
+import * as articleservice from './services/article_service';
+import * as helperservice from './services/helper';
 import {ViewportService} from "./services/viewport-service.js";
+
+//Import Modules
 import Menu from "./components/Menu/menu";
 import HomePage from "./components/HomePage/homepage";
 import Jumbotron from "./components/jumbotron/jumbotron";
@@ -11,28 +17,26 @@ import AdbarItem from "./components/adbar-item/adbar-item";
 import Filter from "./components/filter-item/filter-item";
 import CloseButton from "./sharedelements/closeButton";
 import ContentBanner from "./sharedelements/contentbanner"
-import * as rest from './services/rest';
-import * as articleservice from './services/article_service';
-import * as helperservice from './services/helper';
 
+//Init Components
+const jumbotron = new Jumbotron();
+const adbar = new AdbarItem();
 const login = new Login();
+
+//Init Services
 const viewportServ = new ViewportService();
 const cs = parseInt(viewportServ.getType());
-const sitecontent = document.getElementsByClassName('site-content')[0];
+
+//Declare UI Elements
 const main =  document.getElementsByClassName('main-wrapper')[0];
-const ht =  document.getElementsByClassName('header-topmargin')[0];
-const jumbo =  document.getElementsByClassName('header-jumbotron')[0];
 const filter =  document.getElementsByClassName('main-filter')[0];
-const header =  document.getElementsByClassName('site-header')[0];
 const hm = document.getElementsByClassName('header-menu')[0];
 const sw = document.getElementsByClassName('site-wrapper')[0];
 const sh = document.getElementsByClassName('site-header')[0];
-const mw = document.getElementsByClassName('menu-wrapper');
 const hamburger = document.getElementsByClassName('hamburger')[0];
 
-let close;
+//Init Vars
 let banner;
-let singlepostid = 0;
 let multview;
 let singleview;
 let menuitem;
@@ -49,21 +53,24 @@ const showHomeResults = (results) => {
                 //Create individual components representing each object in collection
                 multview = new MultiView(ele, showSingle);
                 
-                    //append new multiview component to parent element
+                //append new multiview component to parent element
                 main.appendChild(multview.el); 
             }
         }
         else {
-            console.log('error in showhomeresults');
+            console.log('error in showhomeresults: results length equal 0');
     }
 }
 
 let showSingle = (e) => {
     main.innerHTML = '';
 
-    if(filter.className === "main-filter") {
-        filter.className = "main-filter invisible";
+    if(filter.classList) {
+        if(!filter.classList.contains("hide")) 
+            filter.classList.add("hide");
     }
+
+    history.pushState('single', "", "#/singleid=" + e.articleIdFK);
 
     articleservice.getArticleTextById(e.articleIdFK).then(function(results) {
         singleview = new SingleView(e, results.articleText);
@@ -75,19 +82,16 @@ let showMult = () => {
 
     main.innerHTML = '';
 
-    //Show results filter
-    if(filter.className === "main-filter invisible") {
-        filter.className = "main-filter";
-    }
-
-    //Display results saved in localStorage
+    //Display results saved in localStorage ls
     let ls;
+    //Attempt to grab filtered results
     ls = localStorage.getItem('filtered');
     if(!ls) {
+        //If no filtered, attempt to grab all results
         ls = localStorage.getItem('all');
     }
 
-    //Get data from server
+    //If local storage empty,Get data from server
     if(!ls){
         articleservice.getArticles(cs).then(function(results) {
             localStorage.setItem('all', JSON.stringify(results));
@@ -95,13 +99,12 @@ let showMult = () => {
         });
     }
 
-    if(ls) {     
+    //Serialize local storage results and render them
+    if(ls !== null) {     
         ls = JSON.parse(ls);
         showHomeResults(ls);
     }  
-    else {
-        console.log('error displaying results');
-    } 
+
 }
 
 let selectMenu = (menuitem) => {
@@ -120,11 +123,20 @@ let selectMenu = (menuitem) => {
 }
 
 let menuClick = (menuitem) => {
-
     main.innerHTML = '';
     filter.innerHTML = '';
-    
-    switch(menuitem) {
+
+    let currentState = history.state;
+	let nextState;
+
+    if (menuitem  === 'pop') {
+			nextState = currentState;
+	}  
+	else {
+			nextState = menuitem;
+	}
+
+    switch(nextState) {
         case "Bang Equal":
             //Do not show filter on home screen
             if(filter.classList) {
@@ -138,7 +150,7 @@ let menuClick = (menuitem) => {
             }
 
             homepage = new HomePage();
-            main.appendChild(homepage.el);      
+            main.appendChild(homepage.el);   
             break;  
 
         case "Articles":
@@ -156,7 +168,7 @@ let menuClick = (menuitem) => {
             }
 
             createFilter();
-            showMult(); 
+            showMult();   
             break; 
 
         case "Shop":
@@ -172,31 +184,47 @@ let menuClick = (menuitem) => {
 
             banner = new ContentBanner('privacy');
             filter.appendChild(banner.el);
-            showMult();
+            showMult();  
             break;
 
         default:
+                //Do not show filter on home screen
+                if(filter.classList) {
+                if(!filter.classList.contains("hide")) 
+                    filter.classList.add("hide");
+            }
+            //Ensure show full header with jumbotron
+            if(sh.classList) {
+                if(sh.classList.contains("shrink-header")) 
+                        sh.classList.remove("shrink-header");
+            }
+            history.replaceState("Bang Equal", "", "#/Bang Equal");
             homepage = new HomePage();
-            contentmain.appendChild(homepage.el);  
+            main.appendChild(homepage.el);   
+            break;    
     }
     //Add selected css to menu item
-    selectMenu(menuitem);
+    selectMenu(nextState);
+
+    //Save new page so that we can respond to back button		
+    history.pushState(nextState, "", "#/" + nextState);
+    
 
     //Small screens
     //Close menu after hamburger click
     if(cs < 6 ) {
-        let mw1 = document.getElementsByClassName('menu-wrapper'); 
-        for (let i = 0; i < mw1.length; i++) {
-            if(!mw1[i].classList.contains("hide")) {
-                mw1[i].classList.add("hide");
+        let mw = document.getElementsByClassName('menu-wrapper'); 
+        for (let i = 0; i < mw.length; i++) {
+            if(!mw[i].classList.contains("hide")) {
+                mw[i].classList.add("hide");
             }
             else {
-                mw1[i].classList.remove("hide");
+                mw[i].classList.remove("hide");
             }
         }
     }
     //Large screens
-    else if(menuitem !== "Bang Equal") {
+    else if(nextState !== "Bang Equal") {
         //Convert menu to sticky
         if(hm.classList) {
             if(!hm.classList.contains("sticky-menu")) 
@@ -264,12 +292,14 @@ let createFilter = () => {
      //Display results saved in localStorage
     let ls;
     ls = localStorage.getItem('topics');
+    let backgroundColor;
+    backgroundColor = '#db4437';
     if(!ls) {  
         //Query server for string list of all topics
         articleservice.getArticlesTagsAll().then(function(results) {           
             
             for(let r of results) {
-                filteritem = new Filter(r, filterClick, cancelClick);
+                filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
                 filter.appendChild(filteritem.el);
             }
 
@@ -280,18 +310,19 @@ let createFilter = () => {
     else {
         ls = JSON.parse(ls);
         if(ls.length > 0) {
-
             for(let r of ls) {
-                filteritem = new Filter(r, filterClick, cancelClick);
+                filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
                 filter.appendChild(filteritem.el);
             }
         }
     }
 }
 
-const jumbotron = new Jumbotron();
 const menu = new Menu(menuClick);
-const adbar = new AdbarItem();
+//Need this on page load for popstate to work after first page click
+history.replaceState("", "", "");
+//capture when the back button pressed on browser
+window.addEventListener('popstate', function(e) {menuClick('pop');});
 
 localStorage.clear();
 

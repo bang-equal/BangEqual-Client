@@ -17,6 +17,6 @@ export default class MenuItem {
 
   render() {
     return `
-      <h2 class="menu-item">${this.title}</h2>
+      <p class="menu-item">${this.title}</p>
   `;}
 }
