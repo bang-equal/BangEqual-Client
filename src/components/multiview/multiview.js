@@ -28,11 +28,11 @@ export default class MultiView {
         <div class="article-stats-bar">
             <div>
                 <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
-                <h5 style="margin-top:.5rem">&nbsp;</h5>
+                <h5 style="margin-top:.5rem">${this.views}</h5>
             </div>
             <div>
                 <i class="fa fa-share fa-lg" aria-hidden="true"></i>
-                <h5 style="margin-top:.5rem">&nbsp;</h5>
+                <h5 style="margin-top:.5rem">0</h5>
             </div>              
         </div>
         <div class="article-preview">

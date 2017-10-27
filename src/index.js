@@ -47,7 +47,6 @@ let homepage;
 const showHomeResults = (results) => {
 
     if(results.length > 0) {
-
             //Display first collection of results
             for (let ele of results[0]) {
                 //Create individual components representing each object in collection
@@ -76,11 +75,31 @@ let showSingle = (e) => {
         singleview = new SingleView(e, results.articleText);
         main.appendChild(singleview.el);
     });
+
+     //Find a record in local storage with same infoid
+     let storageChunksAll = JSON.parse(localStorage.getItem('all'));
+     for (let i = 0; i < storageChunksAll.length; i++) {
+         let storageChunkSingle = storageChunksAll[i];
+         for (let ii = 0; ii < storageChunkSingle.length; ii++) {
+             if(storageChunkSingle[ii].articleInfoId == e.articleIdFK) {
+                //Found record now add to its view count
+                storageChunkSingle[ii].articleViews++;
+             }
+             else {
+                 //record not found in local storage, get record from server
+             }
+         }
+     }
+
+     // Persist modifications in local storage
+     localStorage.setItem('all', JSON.stringify(storageChunksAll));
 }
 
 let showMult = () => {
 
     main.innerHTML = '';
+    let backgroundColor;
+    backgroundColor = '#db4437';
 
     //Display results saved in localStorage ls
     let ls;
@@ -95,7 +114,19 @@ let showMult = () => {
     if(!ls){
         articleservice.getArticles(cs).then(function(results) {
             localStorage.setItem('all', JSON.stringify(results));
+            console.log(results);
             showHomeResults(results);
+            //Query server for string list of all topics
+            articleservice.getArticlesTagsAll().then(function(results1) {           
+                
+                for(let r of results1) {
+                    filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
+                    filter.appendChild(filteritem.el);
+                }
+
+                // Persist results in local storage
+                localStorage.setItem('topics', JSON.stringify(results1));
+            });
         });
     }
 
@@ -103,6 +134,20 @@ let showMult = () => {
     if(ls !== null) {     
         ls = JSON.parse(ls);
         showHomeResults(ls);
+
+        //Display results saved in localStorage ls
+        let ls1;
+        //Attempt to grab filtered results
+        ls1 = localStorage.getItem('topics');
+
+        if(ls1 !== null) {
+            ls1 = JSON.parse(ls1);
+            for (let r of ls1) {
+                filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
+                filter.appendChild(filteritem.el);
+            }
+        }
+
     }  
 
 }
@@ -167,7 +212,7 @@ let menuClick = (menuitem) => {
                         sh.classList.add("shrink-header");
             }
 
-            createFilter();
+            //createFilter();
             showMult();   
             break; 
 
@@ -273,6 +318,7 @@ let cancelClick = (filteritem) => {
 
     //Clear items in multview
     main.innerHTML = '';
+    filter.innerHTML = '';
 
     //Clear Filtered Local Storage
     localStorage.removeItem("filtered");
@@ -285,37 +331,6 @@ let cancelClick = (filteritem) => {
     }
 
     showMult();
-}
-
-let createFilter = () => {
-
-     //Display results saved in localStorage
-    let ls;
-    ls = localStorage.getItem('topics');
-    let backgroundColor;
-    backgroundColor = '#db4437';
-    if(!ls) {  
-        //Query server for string list of all topics
-        articleservice.getArticlesTagsAll().then(function(results) {           
-            
-            for(let r of results) {
-                filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
-                filter.appendChild(filteritem.el);
-            }
-
-            // Persist results in local storage
-            localStorage.setItem('topics', JSON.stringify(results));
-        });
-    }
-    else {
-        ls = JSON.parse(ls);
-        if(ls.length > 0) {
-            for(let r of ls) {
-                filteritem = new Filter(r, filterClick, cancelClick, backgroundColor);
-                filter.appendChild(filteritem.el);
-            }
-        }
-    }
 }
 
 const menu = new Menu(menuClick);
