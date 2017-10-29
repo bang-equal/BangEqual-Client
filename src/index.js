@@ -243,7 +243,7 @@ let menuClick = (menuitem) => {
                 if(sh.classList.contains("shrink-header")) 
                         sh.classList.remove("shrink-header");
             }
-            history.replaceState("Bang Equal", "", "#/Bang Equal");
+            history.replaceState("Home", "", "#/Home");
             homepage = new HomePage();
             main.appendChild(homepage.el);   
             break;    
@@ -269,7 +269,7 @@ let menuClick = (menuitem) => {
         }
     }
     //Large screens
-    else if(nextState !== "Bang Equal") {
+    else if(nextState !== "Home") {
         //Convert menu to sticky
         if(hm.classList) {
             if(!hm.classList.contains("sticky-menu")) 
@@ -341,4 +341,4 @@ window.addEventListener('popstate', function(e) {menuClick('pop');});
 
 localStorage.clear();
 
-menuClick("Bang Equal");
+menuClick("Home");

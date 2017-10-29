@@ -1,7 +1,7 @@
 import * as rest from './rest';
 
-//let url = "https://bangequal.herokuapp.com/home/";
-let url = "http://localhost:5000/articles/";
+let url = "https://bangequal.herokuapp.com/home/";
+//let url = "http://localhost:5000/articles/";
 
 export let getArticles = (chunksize) => rest.get(url + chunksize, true);
 
